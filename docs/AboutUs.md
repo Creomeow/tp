@@ -18,9 +18,9 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/wuikong)]
 
 * Role: Developer
+* Role: Integration
 
 ### Liu Zhiyuan
-
 
 <img src="images/liu-zhiyuan-source.png" width="200px">
 
