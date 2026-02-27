@@ -310,33 +310,62 @@ Priorities: High (must have) - `* * * *`, Medium (nice to have) - `* * *`, Low (
 
 *{More to be added}*
 
-### Use cases
+## Use Cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+**Use Case 1: Adding a new client followed by new listing under said client**
 
-**Use case: Delete a person**
+Actor: Residential Property Agent(John)
 
-**MSS**
+Goal: Add a new client with his/her property details after first meeting
 
-1. User requests to list persons
-2. AddressBook shows a list of persons
-3. User requests to delete a specific person in the list
-4. AddressBook deletes the person
+**MSS:**
 
-   Use case ends.
+1. John launches application
+2. John adds new client with his/her relevant details
+3. John reads the system confirmation that the new client has been added
+4. John adds a new property listing under said client
+5. John reads the system confirmation that the new listing has been added under said client
 
-**Extensions**
+   Use case ends
 
-* 2a. The list is empty.
+**Extensions:**
 
-  Use case ends.
-* 3a. The given index is invalid.
+* 2a. Application detects error in John’s entry format
+	* 2a1. Application requests for new entry with correct format
+	* 2a2. John enters data in correct format
 
-  * 3a1. AddressBook shows an error message.
+	   Steps 2a1-2a2 repeats until John uses the proper format.
 
-    Use case resumes at step 2.
+	   Use case resumes from step 4
 
-*{More to be added}*
+**Use Case 2: View Property Information of a Client**
+
+Actor: Property Agent
+
+Goal:  See all properties listed under a specific client
+
+**MSS:**
+
+1. Agent identifies client name
+2. Agent uses the viewProperty feature with the client’s name as the parameter
+3. System retrieves all properties linked to client
+4. Displays the list of properties linked to client(indexed)
+5. User chooses the specific property by index
+6. System displays all relevant information about the specific property
+
+   Use Case ends
+
+**Extensions:**
+
+* 2a. Client does not exist
+	* 2a1. Client does not exist message displayed to user
+
+		Use case ends
+
+* 3a. Client exists but no property listed under client
+	* 3a1. No property listed under client message displayed to user
+
+		Use case ends
 
 ### Non-Functional Requirements
 
