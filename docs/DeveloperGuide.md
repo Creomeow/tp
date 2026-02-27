@@ -340,11 +340,13 @@ Priorities: High (must have) - `* * * *`, Medium (nice to have) - `* * *`, Low (
 
 ### Non-Functional Requirements
 
-1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+1. The application should work on any mainstream OS as long as it has Java 17 or above installed.
+2. The system should be able to manage at least 1000 client records without noticeable degradation in performance during typical usage.
+3. A user with above-average typing speed for regular English text should be able to complete most tasks faster using keyboard commands than using the mouse.
+4. The system should respond to any valid user command within 2 seconds under normal operating conditions.
+5. Error messages should be clear and guide the user towards corrective action.
+6. The application should be packaged as a single executable JAR file.
+7. User data should be stored locally and not transmitted externally without user consent.
 
 ### Glossary
 
