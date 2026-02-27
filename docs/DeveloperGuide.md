@@ -350,8 +350,9 @@ Priorities: High (must have) - `* * * *`, Medium (nice to have) - `* * *`, Low (
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Mainstream OS**: Windows, macOS, and Linux.
+* **Executable JAR file**: A packaged Java archive file that can be run directly to start the application.
+* **MSS**: Stands for Main Success Scenario, a scenario of the use case which will be considered a successful one.
 
 ---
 
