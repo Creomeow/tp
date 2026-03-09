@@ -24,6 +24,7 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private Property property;
 
     /**
      * Every field must be present and not null.
@@ -35,6 +36,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.property = null;
     }
 
     public Name getName() {
@@ -51,6 +53,15 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Property getProperty() {
+        return property;
+    }
+
+    //Temporary Setter
+    public void setProperty(Property property) {
+        this.property = property;
     }
 
     /**
