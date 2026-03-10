@@ -14,16 +14,21 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.property.Price;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.PropertyAddress;
+import seedu.address.model.property.Size;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
- * {@code DeleteCommand}.
+ * {@code DeleteClientCommand}.
  */
-public class DeleteCommandTest {
+public class DeleteClientCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -32,7 +37,7 @@ public class DeleteCommandTest {
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteClientCommand deleteCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
                 Messages.format(personToDelete));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -50,13 +55,32 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void execute_unfilteredListHasProperties_success() throws CommandException {
+        AddPropertyCommand addPropertyCommand = new AddPropertyCommand(INDEX_FIRST_PERSON,
+                new Property(new PropertyAddress("311 Clementi Ave 2, #02-25"), new Price("1200000"),
+                new Size("1200")));
+        addPropertyCommand.execute(model);
+
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteClientCommand deleteCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
+                Messages.format(personToDelete));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteClientCommand deleteCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
                 Messages.format(personToDelete));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -77,6 +101,27 @@ public class DeleteCommandTest {
         DeleteClientCommand deleteCommand = new DeleteClientCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_filteredListHasProperties_success() throws CommandException {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        AddPropertyCommand addPropertyCommand = new AddPropertyCommand(INDEX_FIRST_PERSON,
+                new Property(new PropertyAddress("311 Clementi Ave 2, #02-25"), new Price("1200000"),
+                new Size("1200")));
+        addPropertyCommand.execute(model);
+
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteClientCommand deleteCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
+                Messages.format(personToDelete));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test

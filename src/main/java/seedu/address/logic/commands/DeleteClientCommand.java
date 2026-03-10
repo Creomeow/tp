@@ -42,8 +42,20 @@ public class DeleteClientCommand extends Command {
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, Messages.format(personToDelete)));
+
+        // Assume that the format will include property information if it exists
+        // Otherwise, call Messages.format on editedPerson instead of personToDelete
+        String formattedPersonToDelete = Messages.format(personToDelete);
+
+        if (!personToDelete.getProperties().isEmpty()) {
+            DeletePropertyCommand deletePropertyCommand = new DeletePropertyCommand(targetIndex);
+            deletePropertyCommand.execute(model);
+        }
+
+        Person editedPerson = lastShownList.get(targetIndex.getZeroBased());
+
+        model.deletePerson(editedPerson);
+        return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, formattedPersonToDelete));
     }
 
     @Override
