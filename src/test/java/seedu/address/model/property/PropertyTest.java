@@ -59,5 +59,5 @@ public class PropertyTest {
 
         assertFalse(property.equals(differentProperty));
     }
-    
+
 }
