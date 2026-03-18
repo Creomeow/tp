@@ -81,7 +81,7 @@ public class AddPropertyHdbLimitTest {
         AddPropertyCommand addCommand2 = new AddPropertyCommand(Index.fromOneBased(2), hdbProperty2);
         CommandResult result = addCommand2.execute(model);
 
-        assertTrue(result.getFeedbackToUser().contains(AddPropertyCommand.MESSAGE_SUCCESS));
+        assertTrue(result.getFeedbackToUser().contains("New property added"));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class AddPropertyHdbLimitTest {
         AddPropertyCommand addCommand2 = new AddPropertyCommand(INDEX_FIRST_PERSON, condoProperty2);
         CommandResult result = addCommand2.execute(model);
 
-        assertTrue(result.getFeedbackToUser().contains(AddPropertyCommand.MESSAGE_SUCCESS));
+        assertTrue(result.getFeedbackToUser().contains("New property added"));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class AddPropertyHdbLimitTest {
         AddPropertyCommand addCommand2 = new AddPropertyCommand(INDEX_FIRST_PERSON, condoProperty);
         CommandResult result = addCommand2.execute(model);
 
-        assertTrue(result.getFeedbackToUser().contains(AddPropertyCommand.MESSAGE_SUCCESS));
+        assertTrue(result.getFeedbackToUser().contains("New property added"));
     }
 
     @Test
@@ -161,7 +161,6 @@ public class AddPropertyHdbLimitTest {
         AddPropertyCommand addCommand2 = new AddPropertyCommand(INDEX_FIRST_PERSON, propertyNoType2);
         CommandResult result = addCommand2.execute(model);
 
-        assertTrue(result.getFeedbackToUser().contains(AddPropertyCommand.MESSAGE_SUCCESS));
+        assertTrue(result.getFeedbackToUser().contains("New property added"));
     }
 }
-
