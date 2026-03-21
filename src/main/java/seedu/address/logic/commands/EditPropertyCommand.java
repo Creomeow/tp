@@ -29,9 +29,9 @@ public class EditPropertyCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the property identified by the property index "
             + "for the client identified by the client index.\n"
             + "Parameters: CLIENT_INDEX (must be a positive integer) "
-            + "l/PROPERTY_INDEX (must be a positive integer) "
+            + "i/PROPERTY_INDEX (must be a positive integer) "
             + "[a/ADDRESS] [pr/PRICE] [s/SIZE]\n"
-            + "Example: " + COMMAND_WORD + " 1 l/1 a/123 Clementi Road pr/500000 s/1200";
+            + "Example: " + COMMAND_WORD + " 1 i/1 a/123 Clementi Road pr/500000 s/1200";
 
     public static final String MESSAGE_EDIT_PROPERTY_SUCCESS = "Edited Property: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

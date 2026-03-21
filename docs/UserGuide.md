@@ -102,21 +102,12 @@ Format: `addProperty li/INDEX a/ADDRESS p/PRICE s/SIZE`
 **Tip:** Use the `list` command to view the indices of clients before adding a property.
 **Tip:** The `type/TYPE` field is optional.
 
-Examples:
-* `addProperty l/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
-* `addProperty l/2 a/10 Orchard Road pr/2500000 s/1800`
-
 </box>
 
 Examples:
 * `addProperty l/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
 * `addProperty l/2 a/10 Orchard Road pr/2500000 s/1800`
 
-<box type="warning" seamless>
-
-**Warning:** Each client can only have a maximum of **one HDB property**.
-
-</box>
 
 ### Listing all persons : `list`
 
@@ -159,12 +150,24 @@ Examples:
 * `editClient 1 c/91234567 e/johndoe@example.com`
 * `editClient 2 n/Alex Yeoh`
 
-<box type="warning" seamless>
+### Editing a property: `editProperty`
 
-**Warning:** The specified index must refer to a valid client in the current displayed list.  
-**Warning:** Editing a client to match an existing client is not allowed.
+Edits the property identified by the property index for the client identified by the client index.  
+Existing values will be overwritten by the input values.
+
+Format: `editProperty CLIENT_INDEX i/PROPERTY_INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`
+
+<box type="tip" seamless>
+
+**Tip:** At least one of the optional fields must be provided.  
+**Tip:** Only the specified fields will be updated; all other fields will remain unchanged.
 
 </box>
+
+Examples:
+* `editProperty 1 i/1 a/123 Clementi Road pr/500000 s/1200`
+* `editProperty 2 i/1 pr/850000`
+* `editProperty 3 i/2 s/1400`
 
 
 ### Locating persons by name: `find`
