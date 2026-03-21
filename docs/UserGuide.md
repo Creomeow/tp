@@ -99,8 +99,9 @@ Format: `addProperty li/INDEX a/ADDRESS p/PRICE s/SIZE`
 
 <box type="tip" seamless>
 
-**Tip:** Use the `list` command to view the indices of clients before adding a property.
-**Tip:** The `type/TYPE` field is optional.
+**Tip:**
+- Use the `list` command to view the indices of clients before adding a property.
+- The `type/TYPE` field is optional.
 
 </box>
 
@@ -141,8 +142,9 @@ Format: `editClient INDEX [n/NAME] [c/PHONE] [e/EMAIL]`
 
 <box type="tip" seamless>
 
-**Tip:** At least one of the optional fields must be provided.  
-**Tip:** Only the specified fields will be updated; all other fields will remain unchanged.
+**Tip:**
+- At least one of the optional fields must be provided.
+- Only the specified fields will be updated; all other fields will remain unchanged.
 
 </box>
 
