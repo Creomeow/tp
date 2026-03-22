@@ -91,6 +91,25 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+### Adding a property: `addProperty`
+
+Adds a property to the client identified by the index number in the displayed client list.
+
+Format: `addProperty li/INDEX a/ADDRESS p/PRICE s/SIZE`
+
+<box type="tip" seamless>
+
+**Tip:**
+- Use the `list` command to view the indices of clients before adding a property.
+- The `type/TYPE` field is optional.
+
+</box>
+
+Examples:
+* `addProperty l/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
+* `addProperty l/2 a/10 Orchard Road pr/2500000 s/1800`
+
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
@@ -113,6 +132,46 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+### Editing a client: `editClient`
+
+Edits the details of the client identified by the index number used in the displayed client list.  
+Existing values will be overwritten by the input values.
+
+Format: `editClient INDEX [n/NAME] [c/PHONE] [e/EMAIL]`
+
+<box type="tip" seamless>
+
+**Tip:**
+- At least one of the optional fields must be provided.
+- Only the specified fields will be updated; all other fields will remain unchanged.
+
+</box>
+
+Examples:
+* `editClient 1 c/91234567 e/johndoe@example.com`
+* `editClient 2 n/Alex Yeoh`
+
+### Editing a property: `editProperty`
+
+Edits the property identified by the property index for the client identified by the client index.  
+Existing values will be overwritten by the input values.
+
+Format: `editProperty CLIENT_INDEX i/PROPERTY_INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`
+
+<box type="tip" seamless>
+
+**Tip:**
+- At least one of the optional fields must be provided.
+- Only the specified fields will be updated; all other fields will remain unchanged.
+
+</box>
+
+Examples:
+* `editProperty 1 i/1 a/123 Clementi Road pr/500000 s/1200`
+* `editProperty 2 i/1 pr/850000`
+* `editProperty 3 i/2 s/1400`
+
 
 ### Locating persons by name: `find`
 
