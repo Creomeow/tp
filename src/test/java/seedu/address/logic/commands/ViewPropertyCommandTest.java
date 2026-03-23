@@ -25,7 +25,7 @@ import seedu.address.model.property.Size;
 public class ViewPropertyCommandTest {
 
     private Model createModelWithProperties() throws CommandException {
-                Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
         Property propertyA = new Property(
                 new PropertyAddress("123 Clementi Ave 3"),
