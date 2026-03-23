@@ -55,7 +55,7 @@ ClientVault is a **desktop app for managing clients and properties, optimized fo
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
+* Items with `…`​ after them can be used any number of times<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
@@ -171,6 +171,23 @@ Examples:
 * `editProperty 1 i/1 a/123 Clementi Road pr/500000 s/1200`
 * `editProperty 2 i/1 pr/850000`
 * `editProperty 3 i/2 s/1400`
+
+### Adding remarks to a property : `remarkProperty`
+
+Adds a remark to the property at the specified INDEX. 
+Existing remarks will be overwritten by the new remark.
+
+
+Format: `remarkProperty INDEX i/PROPERTY_INDEX r/REMARK`
+* The index **must be a positive integer** 1, 2, 3, …​
+* Remarks cannot be changed by editProperty
+
+**Tip:**
+- You can remove a remark by typing r/ without specifying any text after it.
+
+Examples:
+* `remarkProperty 1 i/1 r/Needs renovation before move-in` adds said remark to the 1st property of the 1st client
+* `remarkProperty 2 i/1 r/Near Chinese Garden MRT`
 
 ### Filtering clients by name: `filterClient`
 
