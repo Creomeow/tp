@@ -93,21 +93,23 @@ Examples:
 
 ### Adding a property: `addProperty`
 
-Adds a property to the client identified by the index number in the displayed client list.
+Adds a property to one or more clients identified by the indices in the displayed client list.
 
-Format: `addProperty li/INDEX a/ADDRESS p/PRICE s/SIZE`
+Format: `addProperty i/INDEX [i/MORE_INDEX]... a/ADDRESS pr/PRICE s/SIZE [type/TYPE]`
 
 <box type="tip" seamless>
 
 **Tip:**
 - Use the `list` command to view the indices of clients before adding a property.
+- You can specify multiple `i/` prefixes to assign the same property to multiple clients.
 - The `type/TYPE` field is optional.
 
 </box>
 
 Examples:
-* `addProperty l/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
-* `addProperty l/2 a/10 Orchard Road pr/2500000 s/1800`
+* `addProperty i/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
+* `addProperty i/1 i/2 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
+* `addProperty i/2 a/10 Orchard Road pr/2500000 s/1800`
 
 
 ### Listing all clients and their properties : `list`
@@ -115,23 +117,6 @@ Examples:
 Shows a list of all clients and their properties in the address book.
 
 Format: `list`
-
-### Editing a person : `edit`
-
-Edits an existing person in the address book.
-
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
-
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
-
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ### Editing a client: `editClient`
 
@@ -256,8 +241,8 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Add Property** | `addProperty li/INDEX a/ADDRESS p/PRICE s/SIZE [type/TYPE]` <br> e.g., `addProperty l/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
+**Add Client**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add Property** | `addProperty i/INDEX a/ADDRESS pr/PRICE s/SIZE [type/TYPE]` <br> e.g., `addProperty i/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
 **Clear**  | `clear`
 **Delete Property** | `deleteProperty INDEX`<br> e.g., `deleteProperty 3`
 **Edit Client** | `editClient INDEX [n/NAME] [c/PHONE] [e/EMAIL]`<br> e.g., `editClient 2 n/Alex Yeoh`
