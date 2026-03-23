@@ -21,6 +21,8 @@ import seedu.address.logic.commands.FilterClientCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RemarkPropertyCommand;
+import seedu.address.logic.commands.ViewClientCommand;
+import seedu.address.logic.commands.ViewPropertyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -70,6 +72,20 @@ public class AddressBookParserTest {
         RemarkPropertyCommand command = (RemarkPropertyCommand) parser.parseCommand(
                 RemarkPropertyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " r/Near MRT");
         assertEquals(new RemarkPropertyCommand(INDEX_FIRST_PERSON, "Near MRT"), command);
+    }
+
+    @Test
+    public void parseCommand_viewClient() throws Exception {
+        ViewClientCommand command = (ViewClientCommand) parser.parseCommand(
+                ViewClientCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new ViewClientCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_viewProperty() throws Exception {
+        ViewPropertyCommand command = (ViewPropertyCommand) parser.parseCommand(
+                ViewPropertyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new ViewPropertyCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
