@@ -110,9 +110,9 @@ Examples:
 * `addProperty l/2 a/10 Orchard Road pr/2500000 s/1800`
 
 
-### Listing all persons : `list`
+### Listing all clients and their properties : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all clients and their properties in the address book.
 
 Format: `list`
 
@@ -191,19 +191,19 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+### Deleting a property : `deleteProperty`
 
-Deletes the specified person from the address book.
+Deletes all properties of specified client from the address book.
 
-Format: `delete INDEX`
+Format: `deleteProperty INDEX`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the properties of client at the specified `INDEX`.
+* The index refers to the index number shown in the displayed client list on the left.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `list` followed by `delete 2` deletes all properties of the 2nd client in the address book.
+* `find john` followed by `delete 1` deletes all properties of the 1st client named `john`.
 
 ### Clearing all entries : `clear`
 
@@ -257,9 +257,11 @@ _Details coming soon ..._
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add Property** | `addProperty li/INDEX a/ADDRESS p/PRICE s/SIZE [type/TYPE]` <br> e.g., `addProperty l/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
 **Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Delete Property** | `deleteProperty INDEX`<br> e.g., `deleteProperty 3`
+**Edit Client** | `editClient INDEX [n/NAME] [c/PHONE] [e/EMAIL]`<br> e.g., `editClient 2 n/Alex Yeoh`
+**Edit Property** | `editProperty CLIENT_INDEX i/PROPERTY_INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`<br> e.g., `editProperty 1 i/1 a/123 Clementi Road pr/500000 s/1200`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**   | `list`
 **Help**   | `help`
