@@ -6,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -17,15 +19,11 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.property.Price;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyAddress;
 import seedu.address.model.property.Size;
-import seedu.address.model.tag.Tag;
 
 public class ViewClientCommandTest {
 
@@ -33,8 +31,7 @@ public class ViewClientCommandTest {
 
     @Test
     public void execute_validIndex_success() throws Exception {
-        Set<Tag> tags = new HashSet<>();
-        Set<Property> properties = new HashSet<>();
+        Set<Property> properties = new LinkedHashSet<>();
 
         Property property = new Property(
                 new PropertyAddress("123 Clementi Ave 3"),
@@ -43,16 +40,10 @@ public class ViewClientCommandTest {
         );
         properties.add(property);
 
-        // Person constructor no longer has Address
-        Person person = new Person(
-                new Name("Alice"),
-                new Phone("91234567"),
-                new Email("alice@email.com"),
-                tags,
-                properties
-        );
-
-        model.addPerson(person);
+        Person aliceWithProperty = ALICE.addProperty(property);
+        Person bensonWithProperty = BENSON.addProperty(property);
+        model.addPerson(aliceWithProperty);
+        model.addPerson(bensonWithProperty);
 
         ViewClientCommand command = new ViewClientCommand(Index.fromZeroBased(0));
 
@@ -60,7 +51,7 @@ public class ViewClientCommandTest {
 
         assertEquals(String.format(Messages.MESSAGE_PROPERTIES_LISTED_OVERVIEW, model.getFilteredPropertyList().size()),
                 result.getFeedbackToUser());
-        assertEquals(person, model.getFilteredPersonList().get(0));
+        assertEquals(aliceWithProperty, model.getFilteredPersonList().get(0));
     }
 
     @Test
@@ -74,24 +65,43 @@ public class ViewClientCommandTest {
 
     @Test
     public void execute_noProperties_success() throws Exception {
-        Set<Tag> tags = new HashSet<>();
-        Set<Property> properties = new HashSet<>(); // empty property set
-        Person person = new Person(
-                new Name("Bob"),
-                new Phone("98765432"),
-                new Email("bob@email.com"),
-                tags,
-                properties
-        );
-
-        model.addPerson(person);
+        model.addPerson(ALICE);
 
         ViewClientCommand command = new ViewClientCommand(Index.fromZeroBased(0));
 
         CommandResult result = command.execute(model);
 
         assertEquals(String.format(Messages.MESSAGE_PROPERTIES_LISTED_OVERVIEW, 0), result.getFeedbackToUser());
-        assertEquals(person, model.getFilteredPersonList().get(0));
+        assertEquals(ALICE, model.getFilteredPersonList().get(0));
+    }
+
+    @Test
+    public void execute_clientsPropertyFiltered_success() throws Exception {
+        Property aliceOnlyProperty = new Property(
+                new PropertyAddress("10 Alpha Street"),
+                new Price("500000"),
+                new Size("90")
+        );
+        Property bensonOnlyProperty = new Property(
+                new PropertyAddress("20 Beta Road"),
+                new Price("900000"),
+                new Size("120")
+        );
+
+        Person aliceWithProperty = ALICE.addProperty(aliceOnlyProperty);
+        Person bensonWithProperty = BENSON.addProperty(bensonOnlyProperty);
+        model.addPerson(aliceWithProperty);
+        model.addPerson(bensonWithProperty);
+
+        ViewClientCommand command = new ViewClientCommand(Index.fromZeroBased(1));
+
+        CommandResult result = command.execute(model);
+
+        assertEquals(String.format(Messages.MESSAGE_PROPERTIES_LISTED_OVERVIEW, 1), result.getFeedbackToUser());
+        assertEquals(1, model.getFilteredPropertyList().size());
+        assertTrue(model.getFilteredPropertyList().contains(bensonOnlyProperty));
+        assertFalse(model.getFilteredPropertyList().contains(aliceOnlyProperty));
+        assertEquals(bensonWithProperty, model.getFilteredPersonList().get(0));
     }
 
     @Test
