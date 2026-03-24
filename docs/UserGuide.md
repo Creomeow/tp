@@ -325,17 +325,17 @@ _Details coming soon ..._
 ## Command summary
 
 
-| Action              | Format, Examples                                                                                                                                 |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add Client**      | `addClient n/NAME c/CONTACT e/EMAIL [t/TAG]…` <br> e.g., `add n/James Ho c/22224444 e/jamesho@example.com t/friend t/colleague`                 |
-| **Add Property**    | `addProperty i/INDEX a/ADDRESS pr/PRICE s/SIZE [type/TYPE]` <br> e.g., `addProperty i/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB` |
-| **Clear**           | `clear`                                                                                                                                          |
-| **Delete Client**   | `deleteClient INDEX`<br> e.g., `deleteClient 3`                                                                                                  |
-| **Delete Property** | `deleteProperty INDEX`<br> e.g., `deleteProperty 3`                                                                                              |
-| **Edit Client**     | `editClient INDEX [n/NAME] [c/CONTACT] [e/EMAIL]`<br> e.g., `editClient 2 n/Alex Yeoh`                                                           |
-| **Edit Property**   | `editProperty CLIENT_INDEX i/PROPERTY_INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`<br> e.g., `editProperty 1 i/1 a/123 Clementi Road pr/500000 s/1200` |
-| **Filter Client**   | `filterClient n/KEYWORD [MORE_KEYWORDS]`<br> e.g., `filterClient n/James Jake`                                                                   |
-| **Filter Property** | `filterProperty a/KEYWORD [MORE_KEYWORDS]`<br> e.g., `filterProperty a/Clementi Dover`                                                           |
-| **List**            | `list`                                                                                                                                           |
-| **Help**            | `help`                                                                                                                                           |
-| **Remark Property** | `remarkProperty CLIENT_INDEX i/PROPERTY_INDEX r/REMARKS`                                                                                         |
+Action              | Format, Examples
+--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add Client**      | `addClient n/NAME c/CONTACT e/EMAIL [t/TAG]…​` <br> e.g., `add n/James Ho c/22224444 e/jamesho@example.com t/friend t/colleague`
+**Add Property**    | `addProperty i/INDEX a/ADDRESS pr/PRICE s/SIZE [type/TYPE]` <br> e.g., `addProperty i/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
+**Clear**           | `clear`
+**Delete Client**   | `deleteClient INDEX`<br> e.g., `deleteClient 3`
+**Delete Property** | `deleteProperty INDEX`<br> e.g., `deleteProperty 3`
+**Edit Client**     | `editClient INDEX [n/NAME] [c/CONTACT] [e/EMAIL]`<br> e.g., `editClient 2 n/Alex Yeoh`
+**Edit Property**   | `editProperty CLIENT_INDEX i/PROPERTY_INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`<br> e.g., `editProperty 1 i/1 a/123 Clementi Road pr/500000 s/1200`
+**Filter Client**   | `filterClient n/KEYWORD [MORE_KEYWORDS]`<br> e.g., `filterClient n/James Jake`
+**Filter Property** | `filterProperty a/KEYWORD [MORE_KEYWORDS]`<br> e.g., `filterProperty a/Clementi Dover`
+**List**            | `list`
+**Help**            | `help`
+**Remark Property** | `remarkProperty CLIENT_INDEX i/PROPERTY_INDEX r/REMARKS` <br> e.g., `remarkProperty 2 i/1 r/Near Chinese Garden MRT`
