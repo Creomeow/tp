@@ -6,10 +6,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Person;
 import seedu.address.model.property.Property;
 
 /**
- * Displays properties matching the selected property and the clients who own them.
+ * Displays the property and the client who owns it.
  */
 public class ViewPropertyCommand extends Command {
 
@@ -34,13 +35,29 @@ public class ViewPropertyCommand extends Command {
 
         Property propertyToView = lastShownPropertyList.get(index.getZeroBased());
 
+        // Find the person who owns this property (with single ownership, there's only one)
+        Person ownerOfProperty = null;
+        for (Person person : model.getFilteredPersonList()) {
+            if (person.getProperties().contains(propertyToView)) {
+                ownerOfProperty = person;
+                break;
+            }
+        }
+
+        // Filter properties to show only the selected property
         model.updateFilteredPropertyList(property -> property.isSameProperty(propertyToView));
-        model.updateFilteredPersonList(person -> person.getProperties().stream()
-                .anyMatch(personProperty -> model.getFilteredPropertyList().stream()
-                        .anyMatch(filteredProperty -> filteredProperty.isSameProperty(personProperty))));
+
+        // Filter persons to show only the owner
+        if (ownerOfProperty != null) {
+            Person finalOwner = ownerOfProperty;
+            model.updateFilteredPersonList(person -> person.equals(finalOwner));
+        } else {
+            model.updateFilteredPersonList(person -> false);
+        }
 
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
+                        ownerOfProperty != null ? 1 : 0));
     }
 
     @Override
