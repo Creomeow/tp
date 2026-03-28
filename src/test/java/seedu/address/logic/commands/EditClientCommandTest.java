@@ -81,6 +81,52 @@ public class EditClientCommandTest {
     }
 
     @Test
+    public void execute_editTagsOnly_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        Person editedPerson = new PersonBuilder(personToEdit)
+                .withTags("friend", "vip")
+                .build();
+
+        EditClientDescriptor descriptor = new EditClientDescriptor();
+        descriptor.setTags(editedPerson.getTags());
+
+        EditClientCommand editCommand = new EditClientCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(MESSAGE_EDIT_CLIENT_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.isSamePerson(editedPerson));
+        expectedModel.updateFilteredPropertyList(p -> editedPerson.getProperties().contains(p));
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_clearTags_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        Person editedPerson = new PersonBuilder(personToEdit)
+                .withTags()
+                .build();
+
+        EditClientDescriptor descriptor = new EditClientDescriptor();
+        descriptor.setTags(editedPerson.getTags());
+
+        EditClientCommand editCommand = new EditClientCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(MESSAGE_EDIT_CLIENT_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.isSamePerson(editedPerson));
+        expectedModel.updateFilteredPropertyList(p -> editedPerson.getProperties().contains(p));
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_duplicatePersonUnfilteredList_failure() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
