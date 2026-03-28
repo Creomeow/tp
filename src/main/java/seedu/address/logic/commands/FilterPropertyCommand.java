@@ -2,27 +2,37 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.property.PropertyAddressContainsKeywordsPredicate;
+import seedu.address.model.property.PropertyMatchesFilterPredicate;
 
 /**
- * Shows only properties whose addresses contain any of the specified keywords.
+ * Shows only properties that match the specified filter criteria.
  */
 public class FilterPropertyCommand extends Command {
 
     public static final String COMMAND_WORD = "filterProperty";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all properties whose addresses contain any"
-            + " of the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: " + PREFIX_ADDRESS + "/ADDRESS\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_ADDRESS + "/Clementi Punggol";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all properties that match the given "
+            + "address keywords and/or price and size ranges, and displays them as a list with index numbers.\n"
+            + "Parameters: [" + PREFIX_ADDRESS + "ADDRESS_KEYWORDS] "
+            + "[" + PREFIX_PRICE + "MIN_PRICE MAX_PRICE] "
+            + "[" + PREFIX_SIZE + "MIN_SIZE MAX_SIZE]\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_ADDRESS + "Clementi "
+            + PREFIX_PRICE + "1000 10000 "
+            + PREFIX_SIZE + "500 5000";
 
-    private final PropertyAddressContainsKeywordsPredicate predicate;
+    private final PropertyMatchesFilterPredicate predicate;
 
-    public FilterPropertyCommand(PropertyAddressContainsKeywordsPredicate predicate) {
+    /**
+     * Creates a {@code FilterPropertyCommand} to filter the list of properties with the specified {@code predicate}.
+    */
+    public FilterPropertyCommand(PropertyMatchesFilterPredicate predicate) {
+        requireNonNull(predicate);
         this.predicate = predicate;
     }
 

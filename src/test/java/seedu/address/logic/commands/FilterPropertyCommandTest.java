@@ -22,7 +22,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.property.Price;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyAddress;
-import seedu.address.model.property.PropertyAddressContainsKeywordsPredicate;
+import seedu.address.model.property.PropertyMatchesFilterPredicate;
 import seedu.address.model.property.Size;
 
 /**
@@ -48,10 +48,12 @@ public class FilterPropertyCommandTest {
 
     @Test
     public void equals() {
-        PropertyAddressContainsKeywordsPredicate firstPredicate =
-                new PropertyAddressContainsKeywordsPredicate(Collections.singletonList("first"));
-        PropertyAddressContainsKeywordsPredicate secondPredicate =
-                new PropertyAddressContainsKeywordsPredicate(Collections.singletonList("second"));
+        PropertyMatchesFilterPredicate firstPredicate =
+                new PropertyMatchesFilterPredicate(Collections.singletonList("first"),
+                        0, Long.MAX_VALUE, 0, Long.MAX_VALUE);
+        PropertyMatchesFilterPredicate secondPredicate =
+                new PropertyMatchesFilterPredicate(Collections.singletonList("second"),
+                        0, Long.MAX_VALUE, 0, Long.MAX_VALUE);
 
         FilterPropertyCommand findFirstCommand = new FilterPropertyCommand(firstPredicate);
         FilterPropertyCommand findSecondCommand = new FilterPropertyCommand(secondPredicate);
@@ -74,9 +76,9 @@ public class FilterPropertyCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPropertyFound() {
+    public void execute_addressKeyword_noPropertyFound() {
         String expectedMessage = String.format(MESSAGE_PROPERTIES_LISTED_OVERVIEW, 0);
-        PropertyAddressContainsKeywordsPredicate predicate = preparePredicate(" ");
+        PropertyMatchesFilterPredicate predicate = preparePredicate("Orchard");
         FilterPropertyCommand command = new FilterPropertyCommand(predicate);
         expectedModel.updateFilteredPropertyList(predicate);
         expectedModel.updateFilteredPersonList(person -> expectedModel.getFilteredPropertyList().stream()
@@ -90,7 +92,7 @@ public class FilterPropertyCommandTest {
     @Test
     public void execute_multipleKeywords_multiplePropertiesAndOwnersFound() {
         String expectedMessage = String.format(MESSAGE_PROPERTIES_LISTED_OVERVIEW, 2);
-        PropertyAddressContainsKeywordsPredicate predicate = preparePredicate("Clementi Punggol");
+        PropertyMatchesFilterPredicate predicate = preparePredicate("Clementi Punggol");
         FilterPropertyCommand command = new FilterPropertyCommand(predicate);
         expectedModel.updateFilteredPropertyList(predicate);
         expectedModel.updateFilteredPersonList(person -> expectedModel.getFilteredPropertyList().stream()
@@ -105,19 +107,36 @@ public class FilterPropertyCommandTest {
     }
 
     @Test
+    public void execute_priceRangeAndSizeRange_propertiesAndOwnersFound() {
+        String expectedMessage = String.format(MESSAGE_PROPERTIES_LISTED_OVERVIEW, 2);
+        PropertyMatchesFilterPredicate predicate =
+                new PropertyMatchesFilterPredicate(Collections.emptyList(), 900000, 1300000, 1050, 1300);
+        FilterPropertyCommand command = new FilterPropertyCommand(predicate);
+        expectedModel.updateFilteredPropertyList(predicate);
+        expectedModel.updateFilteredPersonList(person -> expectedModel.getFilteredPropertyList().stream()
+                .anyMatch(property -> person.getProperties().contains(property)));
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(2, model.getFilteredPropertyList().size());
+        assertEquals(2, model.getFilteredPersonList().size());
+    }
+
+    @Test
     public void toStringMethod() {
-        PropertyAddressContainsKeywordsPredicate predicate =
-                new PropertyAddressContainsKeywordsPredicate(Arrays.asList("keyword"));
+        PropertyMatchesFilterPredicate predicate =
+                new PropertyMatchesFilterPredicate(Arrays.asList("keyword"),
+                        0, Long.MAX_VALUE, 0, Long.MAX_VALUE);
         FilterPropertyCommand filterPropertyCommand = new FilterPropertyCommand(predicate);
         String expected = FilterPropertyCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, filterPropertyCommand.toString());
     }
 
     /**
-     * Parses {@code userInput} into a {@code PropertyAddressContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code PropertyMatchesFilterPredicate} with no price/size restriction.
      */
-    private PropertyAddressContainsKeywordsPredicate preparePredicate(String userInput) {
-        return new PropertyAddressContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private PropertyMatchesFilterPredicate preparePredicate(String userInput) {
+        return new PropertyMatchesFilterPredicate(Arrays.asList(userInput.split("\\s+")),
+                0, Long.MAX_VALUE, 0, Long.MAX_VALUE);
     }
 
     private void addPropertyToModel(Model model, Index index, String address, String price, String size)
