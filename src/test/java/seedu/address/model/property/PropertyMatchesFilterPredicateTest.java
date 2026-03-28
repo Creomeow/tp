@@ -16,6 +16,44 @@ public class PropertyMatchesFilterPredicateTest {
             new Size("1200"));
 
     @Test
+    public void equals() {
+        PropertyMatchesFilterPredicate firstPredicate = new PropertyMatchesFilterPredicate(
+                Collections.singletonList("Clementi"),
+                0,
+                Long.MAX_VALUE,
+                0,
+                Long.MAX_VALUE);
+
+        PropertyMatchesFilterPredicate secondPredicate = new PropertyMatchesFilterPredicate(
+                Collections.singletonList("Punggol"),
+                0,
+                Long.MAX_VALUE,
+                0,
+                Long.MAX_VALUE);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        PropertyMatchesFilterPredicate firstPredicateCopy = new PropertyMatchesFilterPredicate(
+                Collections.singletonList("Clementi"),
+                0,
+                Long.MAX_VALUE,
+                0,
+                Long.MAX_VALUE);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different predicate -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
     public void test_matchesAddressKeyword_returnsTrue() {
         PropertyMatchesFilterPredicate predicate = new PropertyMatchesFilterPredicate(
                 Collections.singletonList("Clementi"),
