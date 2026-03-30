@@ -1,7 +1,7 @@
 ---
 layout: default.md
-  title: "User Guide"
-  pageNav: 3
+title: "User Guide"
+pageNav: 3
 ---
 # ClientVault User Guide
 
@@ -62,7 +62,7 @@ Format: `help`
 
 ### Adding a person: `addClient`
 
-![addCLient](images/addClient.png)
+![addClient](images/addClient.png)
 Adds a person to the address book.
 
 Format: `add n/NAME c/CONTACT e/EMAIL [t/TAG]…`
@@ -82,24 +82,31 @@ Examples:
 ### Adding a property: `addProperty`
 
 ![addProperty](images/addProperty.png)
-Adds a property to one or more clients identified by the indices in the displayed client list.
+Adds a property to the client identified by the index number in the displayed client list.
 
-Format: `addProperty i/INDEX [i/MORE_INDEX]... a/ADDRESS pr/PRICE s/SIZE [type/TYPE]`
+Format: `addProperty i/INDEX a/ADDRESS pr/PRICE s/SIZE [type/TYPE]`
 
 <box type="tip" seamless>
 
 **Tip:**
 
 - Use the `list` command to view the indices of clients before adding a property.
-- You can specify multiple `i/` prefixes to assign the same property to multiple clients.
+- Each property can only belong to one client.
 - The `type/TYPE` field is optional.
+
+</box>
+
+<box type="warning" seamless>
+**Warning:**
+
+- A property cannot be assigned to multiple clients.
+- Attempting to add a property that is already owned by another client will result in an error.
 
 </box>
 
 Examples:
 
 * `addProperty i/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
-* `addProperty i/1 i/2 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
 * `addProperty i/2 a/10 Orchard Road pr/2500000 s/1800`
 
 ### Listing all clients and their properties : `list`
@@ -126,7 +133,7 @@ Examples:
 ### Viewing a client's details: `viewProperty`
 
 ![viewProperty](images/viewProperty.png)
-Shows the Property's information and all it's owners by index.
+Shows the Property's information and it's owner by index.
 
 Format: `viewProperty INDEX`
 
@@ -143,7 +150,7 @@ Examples:
 Edits the details of the client identified by the index number used in the displayed client list.
 Existing values will be overwritten by the input values.
 
-Format: `editClient INDEX [n/NAME] [c/CONTACT] [e/EMAIL]`
+Format: `editClient INDEX [n/NAME] [c/PHONE] [e/EMAIL] [t/TAG]...`
 
 <box type="tip" seamless>
 
@@ -151,6 +158,8 @@ Format: `editClient INDEX [n/NAME] [c/CONTACT] [e/EMAIL]`
 
 - At least one of the optional fields must be provided.
 - Only the specified fields will be updated; all other fields will remain unchanged.
+- If one or more `t/` prefixes are provided, the client’s existing tags will be replaced.
+- You can use `t/` without a value to clear all existing tags.
 
 </box>
 
@@ -158,19 +167,22 @@ Examples:
 
 * `editClient 1 c/91234567 e/johndoe@example.com`
 * `editClient 2 n/Alex Yeoh`
+* `editClient 1 t/friend t/vip`
+* `editClient 3 t/`
 
 ### Editing a property: `editProperty`
 
 ![editProperty](images/editProperty.png)
-Edits the property identified by the property index for the client identified by the client index.
+Edits the property identified by the index number in the displayed property list.
 Existing values will be overwritten by the input values.
 
-Format: `editProperty CLIENT_INDEX i/PROPERTY_INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`
+Format: `editProperty INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`
 
 <box type="tip" seamless>
 
 **Tip:**
 
+- Use the `list` command to view the indices of properties before editing a property.
 - At least one of the optional fields must be provided.
 - Only the specified fields will be updated; all other fields will remain unchanged.
 
@@ -178,9 +190,9 @@ Format: `editProperty CLIENT_INDEX i/PROPERTY_INDEX [a/ADDRESS] [pr/PRICE] [s/SI
 
 Examples:
 
-* `editProperty 1 i/1 a/123 Clementi Road pr/500000 s/1200`
-* `editProperty 2 i/1 pr/850000`
-* `editProperty 3 i/2 s/1400`
+* `editProperty 1 a/123 Clementi Road`
+* `editProperty 2 pr/888888`
+* `editProperty 3 a/10 Marina Bay pr/3000000 s/2000`
 
 ### Adding remarks to a property : `remarkProperty`
 
@@ -222,25 +234,63 @@ Examples:
 * `filterClient n/John` returns `john` and `John Doe`
 * `filterClient n/alex david` returns `Alex Yeoh`, `David Li`<br>
 
-### Filtering properties by address: `filterProperty`
+### Filtering properties: `filterProperty`
 
 ![filterProperty](images/filterProperty.png)
-Finds properties whose addresses contain any of the given keywords.
+Finds properties that match the given address keywords and/or price and size ranges.
 
-Format: `filterProperty a/KEYWORD [MORE_KEYWORDS]`
+Format: `filterProperty [a/ADDRESS_KEYWORDS] [pr/MIN_PRICE MAX_PRICE] [s/MIN_SIZE MAX_SIZE]`
 
+<box type="tip" seamless>
+
+**Tip:**
+
+- At least one filter criterion (address keywords, price range, or size range) must be provided.
+- Multiple filter criteria can be combined in a single command.
+- The client list will show all clients that own any of the matched properties.
+
+</box>
+
+**Address Keyword Matching:**
 * The search is case-insensitive. e.g `jurong` will match `Jurong`
 * The order of the keywords does not matter. e.g. `Buona Vista` will match `Vista Buona`
-* Only the address is searched.
 * Only full words will be matched e.g. `Woodland` will not match `Woodlands`
 * Properties matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `View Street` will return `Clementi Street 3`, `East View`
-* The client list will show all clients that own any of the matched properties.
+
+**Price Range Filtering:**
+* Specify `pr/MIN_PRICE MAX_PRICE` to find properties within a price range.
+* Both boundaries are inclusive.
+* `MIN_PRICE` must be a non-negative integer.
+* It does not matter which value is larger; the command will automatically determine the min and max.
+
+**Size Range Filtering:**
+* Specify `s/MIN_SIZE MAX_SIZE` to find properties within a size range.
+* Both boundaries are inclusive.
+* `MIN_SIZE` must be a non-negative integer.
+* It does not matter which value is larger; the command will automatically determine the min and max.
 
 Examples:
 
-* `filterProperty a/Bukit` returns `Bukit Timah` and `Bukit Panjang`
-* `filterProperty a/punggol changi` returns `Punggol Central`, `Changi South`
+* `filterProperty a/Bukit` returns properties with "Bukit" in the address.
+* `filterProperty a/punggol changi` returns properties with either "Punggol" or "Changi" in the address.
+* `filterProperty pr/1000000 2000000` returns properties priced between 1,000,000 and 2,000,000.
+* `filterProperty s/800 1200` returns properties with sizes between 800 and 1200 sqft.
+* `filterProperty a/Clementi pr/1000000 1500000 s/1000 1500` returns properties in Clementi, priced 1-1.5M, and sized 1000-1500 sqft.
+
+### Filtering properties by type: `filterType`
+
+Filters properties by type (HDB, Condo).
+
+Format: `filterType type/TYPE`
+* The search is case-insensitive. e.g `hdb` will match `HDB`
+* Only full words will be matched e.g. `HD` will not match `HDB
+* Properties matching the specified type will be returned.
+* The client list will show all clients that own any of the matched properties.
+
+Examples:
+* `filterType type/HDB` returns all HDB properties.
+* `filterType type/Condo` returns all Condo properties.
 
 ### Deleting a client : `deleteClient`
 
@@ -262,18 +312,18 @@ Examples:
 ### Deleting a property : `deleteProperty`
 
 ![deleteProperty](images/deleteProperty.png)
-Deletes all properties of specified client from the address book.
+Deletes the specified property from the address book.
 
 Format: `deleteProperty INDEX`
 
-* Deletes the properties of client at the specified `INDEX`.
-* The index refers to the index number shown in the displayed client list on the left.
+* Deletes the property at the specified `INDEX`.
+* The index refers to the index number shown in the displayed property list on the right.
 * The index **must be a positive integer** 1, 2, 3, …
 
 Examples:
 
-* `list` followed by `deleteProperty 2` deletes all properties of the 2nd client in the address book.
-* `find john` followed by `deleteProperty 1` deletes all properties of the 1st client named `john`.
+* `list` followed by `deleteProperty 2` deletes the 2nd property in the address book.
+* `find john` followed by `deleteProperty 1` deletes the 1st property in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
@@ -332,10 +382,10 @@ Action              | Format, Examples
 **Clear**           | `clear`
 **Delete Client**   | `deleteClient INDEX`<br> e.g., `deleteClient 3`
 **Delete Property** | `deleteProperty INDEX`<br> e.g., `deleteProperty 3`
-**Edit Client**     | `editClient INDEX [n/NAME] [c/CONTACT] [e/EMAIL]`<br> e.g., `editClient 2 n/Alex Yeoh`
-**Edit Property**   | `editProperty CLIENT_INDEX i/PROPERTY_INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`<br> e.g., `editProperty 1 i/1 a/123 Clementi Road pr/500000 s/1200`
+**Edit Client**     | `editClient INDEX [n/NAME] [c/CONTACT] [e/EMAIL] [t/TAG]...`<br> e.g., `editClient 2 n/Alex Yeoh`
+**Edit Property**   | `editProperty INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`<br> e.g., `editProperty 1 a/123 Clementi Road pr/500000 s/1200`
 **Filter Client**   | `filterClient n/KEYWORD [MORE_KEYWORDS]`<br> e.g., `filterClient n/James Jake`
-**Filter Property** | `filterProperty a/KEYWORD [MORE_KEYWORDS]`<br> e.g., `filterProperty a/Clementi Dover`
+**Filter Property** | `filterProperty [a/ADDRESS_KEYWORDS] [pr/MIN_PRICE MAX_PRICE] [s/MIN_SIZE MAX_SIZE]`<br> e.g., `filterProperty a/Clementi pr/1000000 1500000 s/1000 1500`
 **List**            | `list`
 **Help**            | `help`
 **Remark Property** | `remarkProperty CLIENT_INDEX i/PROPERTY_INDEX r/REMARKS` <br> e.g., `remarkProperty 2 i/1 r/Near Chinese Garden MRT`

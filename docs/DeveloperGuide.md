@@ -3,7 +3,7 @@ layout: default.md
 title: "Developer Guide"
 pageNav: 3
 ---
-# AB-3 Developer Guide
+# ClientVault Developer Guide
 
 <!-- * Table of Contents -->
 
@@ -159,6 +159,74 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### Add Property feature
+
+The add property feature allows users to add a property to a client identified by the index in the displayed client list.
+This is done by validating the property addition and updating the target client in the address book.
+
+The `AddPropertyCommand` is executed through the following flow:
+
+1. The command retrieves the currently displayed client list by calling `Model#getFilteredPersonList()`.
+2. The target client is identified using the provided index.
+3. The command validates whether the property can be added to the target client.
+4. If the property addition is valid, `AddPropertyCommand` creates an updated `Person` object containing the new property.
+5. `AddPropertyCommand` calls `Model#setPerson(personToEdit, editedPerson)`.
+6. `ModelManager#setPerson(...)` updates the target client in the underlying `AddressBook`.
+7. The command returns a `CommandResult` after the target client has been updated.
+
+For simplicity, the sequence diagram below focuses on the main interactions involved in updating the target client
+and omits lower-level validation details such as index checks, duplicate ownership checks, and exception handling.
+
+The following sequence diagram illustrates the interactions:
+
+<puml src="diagrams/AddPropertySequenceDiagram.puml" alt="AddProperty sequence diagram" />
+
+### Delete Property feature
+
+The delete property feature allows users to delete a property identified by the index in the displayed property list.
+This is done by validating the property deletion and updating the target client in the address book.
+
+The `DeletePropertyCommand` is executed through the following flow:
+1. The command retrieves the currently displayed property list by calling `Model#getFilteredPropertyList()`.
+2. The target property is identified using the provided index.
+3. The command validates whether the property can be deleted from the target client.
+4. If the property deletion is valid, `DeletePropertyCommand` creates an updated `Person` object without the deleted property.
+5. `DeletePropertyCommand` calls `Model#setPerson(personToEdit, editedPerson)`.
+6. `ModelManager#setPerson(...)` updates the target client in the underlying `AddressBook`.
+7. The command returns a `CommandResult` after the target client has been updated.
+
+For simplicity, the sequence diagram below focuses on the main interactions involved in updating the target client and
+omits lower-level validation details such as index checks, ownership checks, and exception handling.
+
+The following sequence diagram illustrates the interactions:
+
+<puml src="diagrams/DeletePropertySequenceDiagram.puml" alt="Interactions between FilterPropertyCommand and ModelManager for filtered list updates" />
+
+### Filter Property feature
+
+The filter property feature allows users to filter properties by address keywords, price range, and size range, and automatically display the owners of those properties. This is done by updating the predicates on the `FilteredList` objects.
+
+The `FilterPropertyCommand` is executed through the following flow:
+
+1. The command is executed with a property predicate (`PropertyMatchesFilterPredicate`) built from the user input, which may include address keywords, price range, and/or size range.
+2. `FilterPropertyCommand` calls `Model#updateFilteredPropertyList(predicate)`.
+3. `ModelManager#updateFilteredPropertyList(...)` updates the property `FilteredList` by calling `setPredicate(...)`.
+4. `FilterPropertyCommand` then calls `Model#updateFilteredPersonList(predicate)`.
+5. `ModelManager#updateFilteredPersonList(...)` updates the person `FilteredList` by calling `setPredicate(ownersOfFilteredProperties)`.
+6. The command returns a `CommandResult` after both filtered lists have been updated.
+
+The following sequence diagram illustrates the interactions:
+
+<puml src="diagrams/FilterPropertySequenceDiagram.puml" alt="Interactions between FilterPropertyCommand and ModelManager for filtered list updates" />
+
+#### Design Highlights
+
+* **Multi-criteria Filtering**: The `PropertyMatchesFilterPredicate` implements the `Predicate<Property>` interface and supports filtering by address keywords, price range, and size range simultaneously.
+* **Address Keyword Matching**: The predicate supports multiple address keywords and performs case-insensitive matching using `StringUtil.containsWordIgnoreCase()`. Keywords use OR logic (properties matching any keyword are included).
+* **Numeric Range Filtering**: The predicate supports optional minimum and maximum price and size boundaries. A property must fall within all specified ranges to match.
+* **Cascading Filter**: After filtering properties, the command automatically updates the person list to show only those who own matching properties, providing a complete view of relevant data.
+* **Flexible Criteria**: At least one filter criterion (address keywords, price range, or size range) must be provided, but users can combine any of these filters as needed.
 
 ### \[Proposed\] Undo/redo feature
 

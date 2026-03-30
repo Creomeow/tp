@@ -7,19 +7,22 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Property}'s {@code PropertyAddress} matches any of the keywords given.
+ * Tests that a {@code Property}'s {@code PropertyType} matches any of the keywords given.
  */
-public class PropertyAddressContainsKeywordsPredicate implements Predicate<Property> {
+public class PropertyTypeContainsKeywordsPredicate implements Predicate<Property> {
     private final List<String> keywords;
 
-    public PropertyAddressContainsKeywordsPredicate(List<String> keywords) {
+    public PropertyTypeContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(Property property) {
+        if (property.getPropertyType() == null) {
+            return false;
+        }
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(property.getAddress().value, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(property.getPropertyType().toString(), keyword));
     }
 
     @Override
@@ -29,11 +32,11 @@ public class PropertyAddressContainsKeywordsPredicate implements Predicate<Prope
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PropertyAddressContainsKeywordsPredicate)) {
+        if (!(other instanceof PropertyTypeContainsKeywordsPredicate)) {
             return false;
         }
 
-        PropertyAddressContainsKeywordsPredicate otherPredicate = (PropertyAddressContainsKeywordsPredicate) other;
+        PropertyTypeContainsKeywordsPredicate otherPredicate = (PropertyTypeContainsKeywordsPredicate) other;
         return keywords.equals(otherPredicate.keywords);
     }
 
@@ -42,3 +45,4 @@ public class PropertyAddressContainsKeywordsPredicate implements Predicate<Prope
         return new ToStringBuilder(this).add("keywords", keywords).toString();
     }
 }
+

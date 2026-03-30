@@ -43,7 +43,7 @@ public class DeletePropertyCommandTest {
         // Add a property to test
         Property testProperty = new Property(new PropertyAddress("311 Clementi Ave 2, #02-25"),
                 new Price("1200000"), new Size("1200"));
-        AddPropertyCommand addPropertyCommand = new AddPropertyCommand(List.of(TypicalIndexes.INDEX_FIRST_PERSON),
+        AddPropertyCommand addPropertyCommand = new AddPropertyCommand(TypicalIndexes.INDEX_FIRST_PERSON,
                 testProperty);
         addPropertyCommand.execute(model);
 
@@ -67,7 +67,7 @@ public class DeletePropertyCommandTest {
         Property testProperty = new Property(new PropertyAddress("311 Clementi Ave 2, #02-25"),
                 new Price("1200000"), new Size("1200"));
         try {
-            AddPropertyCommand addPropertyCommand = new AddPropertyCommand(List.of(TypicalIndexes.INDEX_FIRST_PERSON),
+            AddPropertyCommand addPropertyCommand = new AddPropertyCommand(TypicalIndexes.INDEX_FIRST_PERSON,
                     testProperty);
             addPropertyCommand.execute(model);
         } catch (CommandException e) {
@@ -96,11 +96,11 @@ public class DeletePropertyCommandTest {
         Property property2 = new Property(new PropertyAddress("412 Clementi Ave 3, #03-25"),
                 new Price("1500000"), new Size("1500"));
 
-        AddPropertyCommand addPropertyCommand1 = new AddPropertyCommand(List.of(TypicalIndexes.INDEX_FIRST_PERSON),
+        AddPropertyCommand addPropertyCommand1 = new AddPropertyCommand(TypicalIndexes.INDEX_FIRST_PERSON,
                 property1);
         addPropertyCommand1.execute(model);
 
-        AddPropertyCommand addPropertyCommand2 = new AddPropertyCommand(List.of(TypicalIndexes.INDEX_SECOND_PERSON),
+        AddPropertyCommand addPropertyCommand2 = new AddPropertyCommand(TypicalIndexes.INDEX_SECOND_PERSON,
                 property2);
         addPropertyCommand2.execute(model);
 
@@ -112,6 +112,29 @@ public class DeletePropertyCommandTest {
         CommandResult result = deleteCommand.execute(model);
 
         assertEquals(expectedMessage, result.getFeedbackToUser());
+        assertEquals(1, model.getFilteredPropertyList().size());
+    }
+
+    @Test
+    public void execute_propertyWithNoOwner_gracefulHandling() throws CommandException {
+        // This test covers the edge case where a property exists but has no owner in the filtered list
+        // Add a property to the first person
+        Property testProperty = new Property(new PropertyAddress("311 Clementi Ave 2, #02-25"),
+                new Price("1200000"), new Size("1200"));
+        AddPropertyCommand addPropertyCommand = new AddPropertyCommand(TypicalIndexes.INDEX_FIRST_PERSON,
+                testProperty);
+        addPropertyCommand.execute(model);
+
+        // Filter out all persons, making the property "orphaned" from the current filtered list
+        model.updateFilteredPersonList(person -> false);
+
+        DeletePropertyCommand deleteCommand = new DeletePropertyCommand(INDEX_FIRST_PROPERTY);
+        String expectedMessage = String.format(DeletePropertyCommand.MESSAGE_SUCCESS, testProperty);
+        CommandResult result = deleteCommand.execute(model);
+
+        // Should still report successful deletion even with no owner found (graceful handling)
+        assertEquals(expectedMessage, result.getFeedbackToUser());
+        // Property list remains unchanged since no owner was found to remove it from
         assertEquals(1, model.getFilteredPropertyList().size());
     }
 

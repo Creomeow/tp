@@ -19,9 +19,11 @@ import seedu.address.logic.commands.EditPropertyCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterClientCommand;
 import seedu.address.logic.commands.FilterPropertyCommand;
+import seedu.address.logic.commands.FilterTypeCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RemarkPropertyCommand;
+import seedu.address.logic.commands.SortPropertyCommand;
 import seedu.address.logic.commands.ViewClientCommand;
 import seedu.address.logic.commands.ViewPropertyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -75,6 +77,9 @@ public class AddressBookParser {
         case FilterPropertyCommand.COMMAND_WORD:
             return new FilterPropertyCommandParser().parse(arguments);
 
+        case FilterTypeCommand.COMMAND_WORD:
+            return new FilterTypeCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
@@ -104,6 +109,9 @@ public class AddressBookParser {
 
         case EditPropertyCommand.COMMAND_WORD:
             return new EditPropertyCommandParser().parse(arguments);
+
+        case SortPropertyCommand.COMMAND_WORD:
+            return new SortPropertyCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
