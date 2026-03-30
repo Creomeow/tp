@@ -73,6 +73,14 @@ public class EditPropertyCommand extends Command {
         Property propertyToEdit = lastShownPropertyList.get(index.getZeroBased());
         Property editedProperty = createEditedProperty(propertyToEdit, editPropertyDescriptor);
 
+        for (Person person : model.getAddressBook().getPersonList()) {
+            for (Property p : person.getProperties()) {
+                if (!p.equals(propertyToEdit) && p.isSameProperty(editedProperty)) {
+                    throw new CommandException(MESSAGE_DUPLICATE_PROPERTY);
+                }
+            }
+        }
+
         Person owner = null;
         for (Person person : model.getFilteredPersonList()) {
             if (person.getProperties().contains(propertyToEdit)) {
@@ -83,12 +91,6 @@ public class EditPropertyCommand extends Command {
 
         if (owner == null) {
             throw new CommandException(MESSAGE_PROPERTY_OWNER_NOT_FOUND);
-        }
-
-        for (Property p : owner.getProperties()) {
-            if (!p.equals(propertyToEdit) && p.isSameProperty(editedProperty)) {
-                throw new CommandException(MESSAGE_DUPLICATE_PROPERTY);
-            }
         }
 
         //I use chatgpt to help with writing next 8 lines to ensure the order of property will not be changed.
