@@ -30,7 +30,7 @@ import seedu.address.testutil.TypicalIndexes;
  */
 public class DeletePropertyCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws CommandException {
