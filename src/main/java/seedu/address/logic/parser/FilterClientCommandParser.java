@@ -2,12 +2,15 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import seedu.address.logic.commands.FilterClientCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PersonMatchesFilterPredicate;
 
 /**
  * Parses input arguments and creates a new FilterClientCommand object
@@ -22,30 +25,49 @@ public class FilterClientCommandParser implements Parser<FilterClientCommand> {
     @Override
     public FilterClientCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG);
 
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterClientCommand.MESSAGE_USAGE));
         }
 
-        if (argMultimap.getValue(PREFIX_NAME).isEmpty()) {
+        if (argMultimap.getValue(PREFIX_NAME).isEmpty() && argMultimap.getValue(PREFIX_TAG).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterClientCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_TAG);
 
-        String name = argMultimap.getValue(PREFIX_NAME).orElse("").trim();
+        List<String> nameKeywords = Collections.emptyList();
+        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            String name = argMultimap.getValue(PREFIX_NAME).orElse("").trim();
+            if (name.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        FilterClientCommand.MESSAGE_USAGE));
+            }
 
-        if (name.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterClientCommand.MESSAGE_USAGE));
+            String[] parsedNameKeywords = name.split("\\s+");
+            for (String nameKeyword : parsedNameKeywords) {
+                ParserUtil.parseName(nameKeyword);
+            }
+            nameKeywords = Arrays.asList(parsedNameKeywords);
         }
 
-        String[] nameKeywords = name.split("\\s+");
-        for (String nameKeyword : nameKeywords) {
-            ParserUtil.parseName(nameKeyword);
+        List<String> tagKeywords = Collections.emptyList();
+        if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
+            String tag = argMultimap.getValue(PREFIX_TAG).orElse("").trim();
+            if (tag.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        FilterClientCommand.MESSAGE_USAGE));
+            }
+
+            String[] parsedTagKeywords = tag.split("\\s+");
+            for (String tagKeyword : parsedTagKeywords) {
+                ParserUtil.parseTag(tagKeyword);
+            }
+            tagKeywords = Arrays.asList(parsedTagKeywords);
         }
 
-        return new FilterClientCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new FilterClientCommand(new PersonMatchesFilterPredicate(nameKeywords, tagKeywords));
     }
 
 }
