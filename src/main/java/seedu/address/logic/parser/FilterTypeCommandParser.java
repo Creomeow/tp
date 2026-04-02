@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
 import java.util.Arrays;
@@ -45,12 +46,12 @@ public class FilterTypeCommandParser implements Parser<FilterTypeCommand> {
         String[] typeKeywords = type.split("\\s+");
 
         if (typeKeywords.length != 1) {
-            throw new ParseException("Only one type is allowed. Use 'HDB' or 'Condo' (case-insensitive).");
+            throw new ParseException(String.format(MESSAGE_INVALID_TYPE, FilterTypeCommand.MESSAGE_USAGE));
         }
 
         String keyword = typeKeywords[0].toLowerCase();
         if (!keyword.equals("hdb") && !keyword.equals("condo")) {
-            throw new ParseException("Invalid type. Only 'HDB' or 'Condo' are allowed (case-insensitive).");
+            throw new ParseException(String.format(MESSAGE_INVALID_TYPE, FilterTypeCommand.MESSAGE_USAGE));
         }
 
         return new FilterTypeCommand(new PropertyTypeContainsKeywordsPredicate(Arrays.asList(typeKeywords)));

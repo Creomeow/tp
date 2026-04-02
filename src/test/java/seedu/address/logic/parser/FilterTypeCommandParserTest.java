@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_TYPE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -73,12 +74,12 @@ public class FilterTypeCommandParserTest {
     @Test
     public void parse_multipleKeywords_throwsParseException() {
         assertParseFailure(parser, " type/HDB Condo",
-                "Only one type is allowed. Use 'HDB' or 'Condo' (case-insensitive).");
+                String.format(MESSAGE_INVALID_TYPE, FilterTypeCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_invalidType_throwsParseException() {
         assertParseFailure(parser, " type/Apartment",
-                "Invalid type. Only 'HDB' or 'Condo' are allowed (case-insensitive).");
+                String.format(MESSAGE_INVALID_TYPE, FilterTypeCommand.MESSAGE_USAGE));
     }
 }
