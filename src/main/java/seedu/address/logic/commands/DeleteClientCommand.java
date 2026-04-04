@@ -71,15 +71,19 @@ public class DeleteClientCommand extends Command {
                         new DeletePropertyCommand(Index.fromZeroBased(i));
                 deletePropertyCommand.execute(model);
             }
-
-            // Reset the property list filter
-            model.updateFilteredPropertyList(p -> true);
         }
 
-        // Refresh the person reference after potential property deletions
-        Person personToDeleteRefreshed = lastShownList.get(targetIndex.getZeroBased());
+        // After deleting properties, get the updated person reference (properties may have been removed)
+        Person personToDeleteUpdated = lastShownList.get(targetIndex.getZeroBased());
 
-        model.deletePerson(personToDeleteRefreshed);
+        // Delete the client
+        model.deletePerson(personToDeleteUpdated);
+
+        // After deleting the client, update property filter to match remaining displayed clients
+        List<Person> remainingClients = model.getFilteredPersonList();
+        model.updateFilteredPropertyList(
+                p -> remainingClients.stream().anyMatch(person -> person.getProperties().contains(p)));
+
         return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, formattedPersonToDelete)
                 + deletedPropertiesInfo);
     }
