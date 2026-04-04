@@ -76,8 +76,8 @@ Format: `add n/NAME c/CONTACT e/EMAIL [t/TAG]…`
 
 Examples:
 
-* `add n/John Doe c/98765432 e/johnd@example.com`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com c/1234567 t/criminal`
+* `addClient n/John Doe c/98765432 e/johnd@example.com`
+* `addClient n/Betsy Crowe t/friend e/betsycrowe@example.com c/1234567 t/criminal`
 
 ### Adding a property: `addProperty`
 
@@ -165,7 +165,7 @@ Format: `editClient INDEX [n/NAME] [c/PHONE] [e/EMAIL] [t/TAG]...`
 
 Examples:
 
-* `editClient 1 c/91234567 e/johndoe@example.com`
+* `editClient 1 a/Amy c/91234567 e/johndoe@example.com t/vip`
 * `editClient 2 n/Alex Yeoh`
 * `editClient 1 t/friend t/vip`
 * `editClient 3 t/`
@@ -176,7 +176,7 @@ Examples:
 Edits the property identified by the index number in the displayed property list.
 Existing values will be overwritten by the input values.
 
-Format: `editProperty INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`
+Format: `editProperty INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE] [type/TYPE]`
 
 <box type="tip" seamless>
 
@@ -190,9 +190,9 @@ Format: `editProperty INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`
 
 Examples:
 
+* `editProperty 3 a/10 Marina Bay pr/3000000 s/2000 type/HDB`
 * `editProperty 1 a/123 Clementi Road`
 * `editProperty 2 pr/888888`
-* `editProperty 3 a/10 Marina Bay pr/3000000 s/2000`
 
 ### Adding remarks to a property : `remarkProperty`
 
@@ -394,7 +394,7 @@ Action              | Format, Examples
 **Delete Client**   | `deleteClient INDEX`<br> e.g., `deleteClient 3`
 **Delete Property** | `deleteProperty INDEX`<br> e.g., `deleteProperty 3`
 **Edit Client**     | `editClient INDEX [n/NAME] [c/CONTACT] [e/EMAIL] [t/TAG]...`<br> e.g., `editClient 2 n/Alex Yeoh`
-**Edit Property**   | `editProperty INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE]`<br> e.g., `editProperty 1 a/123 Clementi Road pr/500000 s/1200`
+**Edit Property**   | `editProperty INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE] [type/TYPE]`<br> e.g., `editProperty 1 a/123 Clementi Road pr/500000 s/1200 type/HDB`
 **Filter Client**   | `filterClient [n/NAME_KEYWORDS] [t/TAG_KEYWORDS]`<br> e.g., `filterClient n/James Jake t/friends`
 **Filter Property** | `filterProperty [a/ADDRESS_KEYWORDS] [pr/MIN_PRICE MAX_PRICE] [s/MIN_SIZE MAX_SIZE]`<br> e.g., `filterProperty a/Clementi pr/1000000 1500000 s/1000 1500`
 **List**            | `list`
