@@ -76,8 +76,8 @@ Format: `add n/NAME c/CONTACT e/EMAIL [t/TAG]…`
 
 Examples:
 
-* `add n/John Doe c/98765432 e/johnd@example.com`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com c/1234567 t/criminal`
+* `addClient n/John Doe c/98765432 e/johnd@example.com`
+* `addClient n/Betsy Crowe t/friend e/betsycrowe@example.com c/1234567 t/criminal`
 
 ### Adding a property: `addProperty`
 
@@ -165,7 +165,7 @@ Format: `editClient INDEX [n/NAME] [c/PHONE] [e/EMAIL] [t/TAG]...`
 
 Examples:
 
-* `editClient 1 c/91234567 e/johndoe@example.com`
+* `editClient 1 a/Amy c/91234567 e/johndoe@example.com t/vip`
 * `editClient 2 n/Alex Yeoh`
 * `editClient 1 t/friend t/vip`
 * `editClient 3 t/`
@@ -190,9 +190,9 @@ Format: `editProperty INDEX [a/ADDRESS] [pr/PRICE] [s/SIZE] [type/TYPE]`
 
 Examples:
 
+* `editProperty 3 a/10 Marina Bay pr/3000000 s/2000 type/HDB`
 * `editProperty 1 a/123 Clementi Road`
 * `editProperty 2 pr/888888`
-* `editProperty 3 a/10 Marina Bay pr/3000000 s/2000 type/HDB`
 
 ### Adding remarks to a property : `remarkProperty`
 

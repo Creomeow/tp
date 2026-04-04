@@ -183,7 +183,7 @@ public class EditPropertyCommandTest {
                 .withPhone("88888888")
                 .withEmail("edit@test.com")
                 .withProperty("111 Clementi Ave 1", "1000000", "1000", "HDB")
-                .withProperty("222 Clementi Ave 2", "2000000", "2000", "HDB")
+                .withProperty("222 Clementi Ave 2", "2000000", "2000", "Condo")
                 .build();
 
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
