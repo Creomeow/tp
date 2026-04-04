@@ -1,6 +1,10 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -24,18 +28,18 @@ public class EditPropertyCommandParserTest {
     private static final String VALID_TYPE_AMY = "HDB";
     private static final String VALID_TYPE_BOB = "Condo";
 
-    private static final String ADDRESS_DESC_AMY = " a/" + VALID_ADDRESS_AMY;
-    private static final String ADDRESS_DESC_BOB = " a/" + VALID_ADDRESS_BOB;
-    private static final String PRICE_DESC_AMY = " pr/" + VALID_PRICE_AMY;
-    private static final String PRICE_DESC_BOB = " pr/" + VALID_PRICE_BOB;
-    private static final String SIZE_DESC_AMY = " s/" + VALID_SIZE_AMY;
-    private static final String SIZE_DESC_BOB = " s/" + VALID_SIZE_BOB;
-    private static final String TYPE_DESC_AMY = " type/" + VALID_TYPE_AMY;
-    private static final String TYPE_DESC_BOB = " type/" + VALID_TYPE_BOB;
+    private static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
+    private static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    private static final String PRICE_DESC_AMY = " " + PREFIX_PRICE + VALID_PRICE_AMY;
+    private static final String PRICE_DESC_BOB = " " + PREFIX_PRICE + VALID_PRICE_BOB;
+    private static final String SIZE_DESC_AMY = " " + PREFIX_SIZE + VALID_SIZE_AMY;
+    private static final String SIZE_DESC_BOB = " " + PREFIX_SIZE + VALID_SIZE_BOB;
+    private static final String TYPE_DESC_AMY = " " + PREFIX_TYPE + VALID_TYPE_AMY;
+    private static final String TYPE_DESC_BOB = " " + PREFIX_TYPE + VALID_TYPE_BOB;
 
-    private static final String INVALID_ADDRESS_DESC = " a/";
-    private static final String INVALID_PRICE_DESC = " pr/abc";
-    private static final String INVALID_SIZE_DESC = " s/abc";
+    private static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS;
+    private static final String INVALID_PRICE_DESC = " " + PREFIX_PRICE + "abc";
+    private static final String INVALID_SIZE_DESC = " " + PREFIX_SIZE + "abc";
 
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPropertyCommand.MESSAGE_USAGE);
