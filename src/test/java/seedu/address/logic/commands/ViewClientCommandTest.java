@@ -21,10 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.Person;
-import seedu.address.model.property.Price;
-import seedu.address.model.property.Property;
-import seedu.address.model.property.PropertyAddress;
-import seedu.address.model.property.Size;
+import seedu.address.model.property.*;
 
 public class ViewClientCommandTest {
 
@@ -37,7 +34,8 @@ public class ViewClientCommandTest {
         Property property = new Property(
                 new PropertyAddress("123 Clementi Ave 3"),
                 new Price("1000000"),
-                new Size("121")
+                new Size("121"),
+                new PropertyType("HDB")
         );
         properties.add(property);
 
@@ -81,12 +79,14 @@ public class ViewClientCommandTest {
         Property aliceOnlyProperty = new Property(
                 new PropertyAddress("10 Alpha Street"),
                 new Price("500000"),
-                new Size("90")
+                new Size("90"),
+                new PropertyType("Condo")
         );
         Property bensonOnlyProperty = new Property(
                 new PropertyAddress("20 Beta Road"),
                 new Price("900000"),
-                new Size("120")
+                new Size("120"),
+                new PropertyType("Condo")
         );
 
         Person aliceWithProperty = ALICE.addProperty(aliceOnlyProperty);
