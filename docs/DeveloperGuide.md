@@ -385,122 +385,271 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Target user profile:
 
-Tech-savvy property agents in Singapore who handle transactions and manage multiple buyers/sellers concurrently. They rely on fast retrieval of key client + property details during time-sensitive interactions (calls, viewings, negotiations) and prefer a keyboard-centric workflow over mouse-heavy CRM tools
+* requires way to handle multiple clients and properties concurrently without losing track of key details (e.g., unit size, asking price, buyer requirements) during time-sensitive interactions (calls, viewings, negotiations)
+* needs to quickly recall client and property details without navigating through multiple screens or mouse-heavy CRM tools
+* tech-savvy property agents
+* types fast
+* comfortable using CLI apps
 
 ### Value Proposition:
 
 ClientVault enables Singapore residential property agents to capture, organize, and retrieve client + property details in seconds through a fast, keyboard-driven interface. This reduces the friction of searching across chat logs and spreadsheets when handling daily tasks such as:
 
+* managing client contacts and roles (buyer/seller)
 * recalling unit details (flat type / size / bedrooms / lease remaining)
 * tracking buyer requirements (budget, location, preferred property type)
 * quickly matching buyers to suitable seller listings.
 
 ### User stories
 
-Priorities: High (must have) - `* * * *`, Medium (nice to have) - `* * *`, Low (unlikely to have) - `* *`, Excluded - `*`
+Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 
-| Priority | As a …           | I want to …                 | So that I can…                                 |
-|-----|------------------| ------------------------------ |------------------------------------------------|
-| `* * * *` | property agent   | add a client with contact details and role (buyer/seller)       | retrieve them quickly during calls             |
-| `* * * *` | property agent   | view a client’s full profile using a command             | reference key details instantly                |
-| `* * * *` | property agent   | remove clients who are no longer buying/selling property             | reduce clutter                                 |
-| `* * * *` | property agent   | add a property listing with details (HDB/Condo, location, size, bedrooms, asking price, lease remaining)        | store the listings centrally                   |
-| `* * * *` | property agent   | list all active property listings  | quickly scan what I have available             |
-| `* * * *` | property agent   | delete property listings that have just been transacted         | reduce clutter                                 |
-| `* * *` | property agent   | find listings that match a buyer’s requirements (budget/type/location)             | suggest suitable homes quickly                 |
-| `* * *` | property agent   | update buyer requirements (budget, preferred location, type, min bedrooms)             | ensure matches remain accurate                 |
-| `* * *` | property agent   | update listing details (asking price, status, lease remaining)        | ensure information stays current               |
-| `* * *` | property agent   | see a compact summary (type, size, bedrooms, lease, price)  | answer quickly without opening multiple fields |
-| `* * *` | property agent   | use keyboard-friendly commands and aliases         | operate quickly without a mouse                |
-| `* *` | property agent   |  tag clients/listings (e.g., “urgent”, “hot lead”, “near MRT”)        | filter and prioritise easily                   |
-| `* *` | property agent   | set follow-up reminders  | stay on top of deadlines and next steps        |
-| `* *` | property agent   | record seller viewing time windows         | make scheduling smoother                       |
-| `*` | property agent   | export a client or listing summary         | share it with clients or teammates                                              |
+| Priority | As a …           | I want to …                                                                                              | So that I can…                                                      |
+|----------|------------------|----------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| `* * *`  | property agent   | add a client with contact details and role (buyer/seller)                                                | retrieve them quickly during calls                                  |
+| `* * *`  | property agent   | view a client’s full profile using a command                                                             | reference key details instantly                                     |
+| `* * *`  | property agent   | remove clients who are no longer buying/selling property                                                 | reduce clutter                                                      |
+| `* * *`  | property agent   | add a property listing with details (HDB/Condo, location, size, bedrooms, asking price, lease remaining) | store the listings centrally                                        |
+| `* * *`  | property agent   | list all active property listings                                                                        | quickly scan what I have available                                  |
+| `* * *`  | property agent   | view a property's full details using a command                                                           | reference key details instantly                                     |
+| `* * *`  | property agent   | delete property listings that have just been transacted                                                  | reduce clutter                                                      |
+| `* *`    | property agent   | find listings that match a buyer’s requirements (budget/type/location)                                   | suggest suitable homes quickly                                      |
+| `* *`    | property agent   | update buyer requirements (budget, preferred location, type, min bedrooms)                               | ensure matches remain accurate                                      |
+| `* *`    | property agent   | modify any client details without re-adding them                                                         | quickly correct mistakes and keep information updated               |
+| `* *`    | property agent   | view a specific property's owner                                                                         | contact the seller quickly when there is a offer for their property |
+| `* *`    | property agent   | update listing details (asking price, status, lease remaining)                                           | ensure information stays current                                    |
+| `* *`    | property agent   | see a compact summary (type, size, bedrooms, lease, price)                                               | answer quickly without opening multiple fields                      |
+| `* *`    | property agent   | use keyboard-friendly commands and aliases                                                               | operate quickly without a mouse                                     |
+| `* *`    | property agent   | tag property listings (e.g., “urgent”, “hot lead”, “near MRT”)                                           | input important remarks or features of the property                 |
+| `*`      | property agent   | set follow-up reminders                                                                                  | stay on top of deadlines and next steps                             |
+| `*`      | property agent   | record seller viewing time windows                                                                       | make scheduling smoother                                            |
+| `*`      | property agent   | export a client or listing summary                                                                       | share it with clients or teammates                                  |
 
 *{More to be added}*
 
 ## Use Cases
 
-**Use Case 1: Adding a new client followed by new listing under said client**
+Note: For all use cases, the System is `ClientVault` and the Actor is the `Property Agent`, unless specified otherwise
 
-Actor: Residential Property Agent(John)
+**Use Case 1: Adding a new client**
 
-Goal: Add a new client with his/her property details after first meeting
+Goal: Add a new client's details after first meeting
 
 **MSS:**
 
-1. John launches application
-2. John adds new client with his/her relevant details
-3. John reads the system confirmation that the new client has been added
-4. John adds a new property listing under said client
-5. John reads the system confirmation that the new listing has been added under said client
+1. Actor launches application
+2. Actor adds new client with his/her relevant details
+3. System adds the new client to the address book
+4. Actor reads the system confirmation that the new client has been added
 
    Use case ends
 
 **Extensions:**
 
-* 2a. Application detects error in John’s entry format
-	* 2a1. Application requests for new entry with correct format
-	* 2a2. John enters data in correct format
+* 2a. System detects error in Actor’s entry format or missing required fields
+	* 2a1. System requests for new entry with correct format
+	* 2a2. Actor enters data in correct format 
+      
+      Steps 2a1-2a2 repeats until Actor uses the proper format 
 
-	   Steps 2a1-2a2 repeats until John uses the proper format.
+      Use case resumes from step 3
 
-	   Use case resumes from step 4
+* 2b. System detects duplicate client entry
+    * 2b1. System shows an error message that the client already exists in the address book
+    * 2b2. Actor enters data with different name
+      
+      Steps 2b1-2b2 repeats until Actor uses a different name
+  
+      Use case resumes from step 3
 
-**Use Case 2: View Property Information of a Client**
+**Use Case 2: Adding a new property**
 
-Actor: Property Agent
+Goal: Add a new property's details 
+
+**MSS:**
+
+1. Actor launches application
+2. Actor adds new property with relevant details
+3. System adds the new property to the address book
+4. Actor reads the system confirmation that the new property has been added
+
+   Use case ends
+
+**Extensions:**
+
+* 2a. System detects error in Actor’s entry format or missing required fields
+    * 2a1. System requests for new entry with correct format
+    * 2a2. Actor enters data in correct format
+
+      Steps 2a1-2a2 repeats until Actor uses the proper format
+
+      Use case resumes from step 3
+
+* 2b. System detects duplicate property entry
+    * 2b1. System shows an error message that the client already exists in the address book
+
+      Use case ends
+  
+* 2c. System detects client already has a 'HDB' type property
+    * 2c1. System shows an error message that the client already has a 'HDB' type property
+
+      Use case ends
+
+**Use Case 3: View Property Information of a Client**
 
 Goal:  See all properties listed under a specific client
 
 **MSS:**
 
-1. Agent identifies client name
-2. Agent uses the viewProperty feature with the client’s name as the parameter
-3. System retrieves all properties linked to client
-4. Displays the list of properties linked to client(indexed)
-5. User chooses the specific property by index
-6. System displays all relevant information about the specific property
+1. Actor identifies client index in the displayed client list
+2. Actor uses the viewClient feature with the client’s index as the parameter
+3. System retrieves client at that index
+4. System retrieves all properties linked to that client 
+5. System displays the list of properties linked to client(indexed)
+6. Actor chooses the specific property by index
+7. System displays all relevant information about the specific property
 
    Use Case ends
 
 **Extensions:**
 
-* 2a. Client does not exist
-	* 2a1. Client does not exist message displayed to user
+* 2a. Client index is invalid (e.g., out of bounds, not a number)
+	* 2a1. System shows error message that client index is invalid
 
-		Use case ends
+      Step 2a1 repeats until Actor uses a valid client index
+       
+      Use case resumes from Step 3
 
-* 3a. Client exists but no property listed under client
-	* 3a1. No property listed under client message displayed to user
+* 4a. Client exists but no property listed under client
+	* 4a1. System shows message that no property is listed under client
+    
+      Use case ends
 
-		Use case ends
+**Use Case 4:  Delete property listing**
 
-**Use Case 3:  Delete property listing after successful transaction**
-
-Actor: Property agent
-
-Goal: Delete a listing
+Goal: Delete a listing after a successful transaction to reduce clutter in the address book
 
 **MSS:**
-1. Agent confirms a property has been sold
-2. Agent identifies client name and index
-3. Agent uses the deleteProperty feature with client name, index, address, price and size
+1. Actor confirms a property has been sold
+2. Actor identifies property index
+3. Agent uses the deleteProperty feature with property index
 4. System verifies property exists
 5. System confirmation that said property is deleted
 
    Use case ends
 
 **Extension:**
-* 4a. One of the inputs does not match an existing property
-  * 4a1. System informs user that specified property does not exist
-  * 4a2. Prompts user to try deleting again and give a delete format to follow
-  * 4a3. Steps 4a1 to 4a2 repeats as long as user doesn’t input the valid
-      details of an existing property
+* 3a. Property index is invalid (e.g., out of bounds, not a number)
+  * 3a1. System shows error message that property index is invalid
+  
+    Step 3a1 repeats until Actor uses a valid property index
 
-    Use case ends
+    Use case resumes from Step 4
 
+**Use Case 5: Delete Client**
+
+Goal: Delete a client and all their associated properties to reduce clutter
+
+**MSS:**
+
+1. Actor identifies client index in the displayed client list
+2. Actor uses the deleteClient feature with the client's index
+3. System verifies client exists
+4. System deletes all properties associated with the client
+5. System deletes the client
+6. System shows confirmation that the client and their properties have been deleted
+
+   Use case ends
+
+**Extension:**
+* 2a. Client index is invalid (e.g., out of bounds, not a number)
+    * 2a1. System shows error message that client index is invalid
+
+      Step 2a1 repeats until Actor uses a valid client index
+
+      Use case resumes from Step 3
+
+**Use Case 6: Edit Client**
+
+Goal: Edit a client's details to keep information updated and accurate
+
+**MSS:**
+
+1. Actor identifies client index in the displayed client list
+2. Actor uses the editClient feature with the client's index and the fields to update (name, phone, email, address, role, tags)
+3. System verifies client exists at the given index
+4. System validates the provided field formats
+5. System updates the client with the new details
+6. System shows confirmation that the client has been successfully updated
+   Use case end
+
+**Extension:**
+* 2a. Client index is invalid (e.g., out of bounds, not a number)
+    * 2a1. System shows error message that client index is invalid
+
+      Step 2a1 repeats until Actor uses a valid client index
+
+      Use case resumes from Step 3
+
+* 2b. System detects no fields are provided to edit
+    * 2b1. System shows error message that no fields have been provided to edit
+
+      Step 2b1 repeats until Actor provides at least one field to edit
+  
+      Use case ends
+
+* 4a. One or more provided field formats are invalid (e.g. invalid phone number, invalid email)
+    * 4a1. System shows error message that the provided field format(s) are invalid
+
+      Step 4a1 repeats until Actor provides valid field formats
+
+      Use case resumes from Step 5
+
+* 4b. System detects duplicate client entry after editing (e.g., another client with the same name already exists in the address book)
+    * 4b1. System shows error message that the edited client details would result in a duplicate client entry
+
+      Use case ends
+
+<box type="note" seamless>
+
+**Note:**
+
+- Edit Property works the same way, with the following differences:
+  - In step 2, the actor uses the property index and the fields to update (address, price, size, tags) instead of client index and client fields
+  - In extension 4b, the system will additionally check that the client will not have 2 HDB type properties after the edit on top of checking for duplicate property entry
+    </box>
+
+**Use Case 7: Filter Client**
+
+Goal: Filter clients by name to quickly find specific clients
+
+**MSS:**
+1. Actor enters filter criteria (name or tag)
+2. Actor uses the filterClient feature with the keywords
+3. System filters the client list to show only clients whose names match the keywords
+4. System displays the filtered list of clients
+
+   Use case ends
+
+**Extensions:**
+* 2a. No keywords provided
+    * 2a1. System shows error message requesting keywords
+      Step 2a1 repeats until Actor provides keywords.
+      Use case resumes from step 3
+
+* 3a. No clients match the keywords
+    * 3a1. System shows message that no clients match the criteria
+      Use case ends
+
+<box type="note" seamless>
+
+**Note:**
+
+- Filter Property works the same way, with the following differences:
+    - In step 1, the actor can filter by property address, price range, or size range instead of client name and tag fields
+      </box>
+  
 ### Non-Functional Requirements
 
 1. The application should work on any mainstream OS as long as it has Java 17 or above installed.
@@ -510,12 +659,22 @@ Goal: Delete a listing
 5. Error messages should be clear and guide the user towards corrective action.
 6. The application should be packaged as a single executable JAR file.
 7. User data should be stored locally and not transmitted externally without user consent.
+8. The application should have a user-friendly command syntax that is consistent across different features.
 
 ### Glossary
 
 * **Mainstream OS**: Windows, macOS, and Linux.
 * **Executable JAR file**: A packaged Java archive file that can be run directly to start the application.
 * **MSS**: Stands for Main Success Scenario, a scenario of the use case which will be considered a successful one.
+* **Extension**: An alternative scenario that may occur during the execution of a use case, which may be triggered by an error or an edge case.
+* **Client**: A person who is either buying or selling a property, whose details are stored in the address book.
+* **Property**: A residential property listing, whose details are stored in the address book and linked to a client who owns it.
+* **Index**: The position of a client or property in the displayed list, starting from 1 for the first item.
+* **Filter criteria**: The keywords or parameters used to filter the client or property list (e.g., name keywords for clients, address keywords/price range/size range for properties).
+* **Filtered list**: A subset of the full client or property list that matches the filter criteria and is displayed to the user.
+* **Command syntax**: The format of the commands that the user types to interact with the application (e.g., `add n/John Doe p/98765432`)
+* **Valid user command**: A command that follows the defined command syntax and can be parsed and executed by the application without errors.
+* **Above-average typing speed**: A typing speed that is faster than 40 words per minute (wpm)
 
 ---
 
@@ -562,3 +721,47 @@ testers are expected to do more *exploratory* testing.
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 2. _{ more test cases … }_
+
+## **Appendix: Planned Enhancements** ##
+Team size: 5
+
+1. **List ordering**: Allow users to order the displayed list of clients or properties by different fields (e.g., name, price, size) using a command like `list orderby/price`. 
+2. **Duplicate client error message**: Make the error message for adding a duplicate client more specific. Currently, attempting to add a client with an identical name produces the generic message `This person already exists in the address book.` We plan to update this to: `A client with the name [NAME] already exists`. If this is a different person, consider using a distinguishing middle name or suffix (e.g., `Alice Tan 2`).
+3. **Duplicate phone number error message**: When adding a client with a phone number that already exists in the address book, the error message should specify which existing client has that phone number. For example: `The phone number [PHONE] is already associated with client [NAME].`
+4. **Duplicate property error message**: When adding a property that already exists in the address book, the error message should specify which existing property has that address. For example: `A property with the address [ADDRESS] already exists, owned by client [NAME].`
+5. **Out-of-range error message**: Make the error message for out-of-range index more descriptive. When a user types a command like `deleteProperty 99` and there are fewer than 99 contacts, the current error message is `Invalid property index!` We plan to improve this to: `Index 99 is out of range. The current list has [N] properties. Please enter an index between 1 and [N].`
+6. **Improve the edit command output**: Make successful editClient show what was actually changed. Currently, a successful edit command returns `Edited Person: [all fields]`, which makes it hard to see what changed. We plan to update the success message to show only the fields that were modified: e.g., `Edited contact Alex Yeoh: phone updated from 91234567 to 98765432.` This can be extended to editProperty as well, e.g., `Edited property 1: price updated from $500,000 to $550,000.`
+
+## **Appendix: Effort** ##
+
+### Difficulty Level
+
+ClientVault is significantly more complex than AB3. AB3 manages a single entity type (`Person`) with a flat, uniform set of fields. ClientVault introduces **two distinct entities** — clients and properties — each with their own domain-specific fields, validation rules, and UI representations. On top of this, we implemented a **linking mechanism** between clients and properties, which required bidirectional relationship management across the model, storage, and UI layers. The overall difficulty is estimated to be roughly **1.5–2× that of AB3**.
+
+### Challenges Faced
+
+**Managing two entity types.** Extending AB3's single-entity model to support both `Client` and `Property` required significant refactoring of the `Model`, `Logic`, and `Storage` components. Commands that previously operated uniformly on `Person` objects needed to be duplicated and specialised, and parsers had to distinguish between the two entity types at the command level.
+
+**Domain-specific field validation.** Property-specific fields such as property size, type, and price required thoughtful constraints. Determining sensible validation bounds and producing meaningful error messages for each field added a non-trivial amount of implementation and testing effort compared to AB3's simpler `Name`, `Phone`, and `Email` fields.
+
+**UI adaptation.** The default AB3 UI displays a single uniform contact list. We adapted this to differentiate clients from properties visually and to display linked contacts within each card, requiring non-trivial changes to the FXML layout and the `PersonCard` / `PersonListPanel` components.
+
+### Effort Required
+
+Compared to AB3's approximately 6 KLoC of functional code, ClientVault's codebase is meaningfully larger due to the addition of new entity types, new commands, extended parser logic, and the linking feature. We estimate the team put in roughly **300–400 hours** of combined effort across the second half of the semester, roughly distributed as: model/logic refactoring (~30%), new commands and parsers (~25%), storage and data integrity (~15%), UI changes (~15%), testing (~15%).
+
+### Reuse and Adaptation
+
+A significant portion of the project's scaffolding was inherited from **AB3**, including the overall architecture (UI → Logic → Model → Storage), the `Command`/`Parser` framework, JSON serialisation via Jackson, and the JavaFX UI shell. This saved roughly **20–25%** of the effort that would have been required to build from scratch. Our work focused on adapting and extending this base rather than replacing it.
+
+No external libraries beyond those already present in AB3 (`Jackson`, `JavaFX`, `JUnit 5`) were introduced.
+
+### Achievements
+
+- Successfully extended a single-entity address book into a **dual-entity property agent tool** with domain-relevant fields.
+- Implemented a **bidirectional client–property linking system** with referential integrity maintained across edits, deletions, and storage serialisation.
+- Achieved good test coverage across new commands and model classes, maintaining the project's overall code quality bar.
+- Delivered a coherent, property-agent-focused CLI experience that meaningfully differentiates ClientVault from the AB3 baseline.
+
+---
+
