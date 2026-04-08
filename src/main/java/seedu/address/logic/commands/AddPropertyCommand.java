@@ -52,7 +52,7 @@ public class AddPropertyCommand extends Command {
 
     /**
      * Creates an AddPropertyCommand to add the specified {@code Property}
-     * to the person at the specified {@code Index}.
+     * to the client at the specified {@code Index}.
      *
      * @param targetIndex The index of the person to add the property to.
      * @param property The property to add.
@@ -117,9 +117,9 @@ public class AddPropertyCommand extends Command {
     }
 
     /**
-     * Validates that the displayed person list is not empty.
+     * Validates that the displayed client list is not empty.
      *
-     * @param lastShownList The list of persons currently displayed.
+     * @param lastShownList The list of clients currently displayed.
      * @throws CommandException If the list is empty.
      */
     private void validatePersonList(List<Person> lastShownList) throws CommandException {
@@ -131,8 +131,8 @@ public class AddPropertyCommand extends Command {
     /**
      * Returns the target person identified by the target index.
      *
-     * @param lastShownList The list of persons currently displayed.
-     * @return The person at the specified index.
+     * @param lastShownList The list of clients currently displayed.
+     * @return The client at the specified index.
      * @throws CommandException If the index is invalid.
      */
     private Person getTargetPerson(List<Person> lastShownList) throws CommandException {
@@ -144,10 +144,10 @@ public class AddPropertyCommand extends Command {
     }
 
     /**
-     * Ensures that the property can be added to the specified person.
+     * Ensures that the property can be added to the specified client.
      *
      * @param model The model containing the address book data.
-     * @param personToEdit The person to add the property to.
+     * @param personToEdit The client to add the property to.
      * @throws CommandException If the property violates any constraints.
      */
     private void ensurePropertyCanBeAdded(Model model, Person personToEdit) throws CommandException {
@@ -166,7 +166,7 @@ public class AddPropertyCommand extends Command {
      * Ensures that the property is not already owned by another client.
      *
      * @param model The model containing the address book data.
-     * @param personToEdit The person attempting to own the property.
+     * @param personToEdit The client attempting to own the property.
      * @throws CommandException If the property is already owned by another client.
      */
     private void ensurePropertyNotOwnedByAnotherClient(Model model, Person personToEdit)

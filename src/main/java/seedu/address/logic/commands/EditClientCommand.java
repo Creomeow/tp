@@ -121,9 +121,9 @@ public class EditClientCommand extends Command {
     /**
      * Creates and returns a {@code Person} with updated details.
      *
-     * @param personToEdit         The original person.
+     * @param personToEdit The original person.
      * @param editClientDescriptor The descriptor containing updated values.
-     * @return The edited person.
+     * @return The edited client.
      */
     private static Person createEditedPerson(Person personToEdit,
                                              EditClientDescriptor editClientDescriptor) {
@@ -188,13 +188,13 @@ public class EditClientCommand extends Command {
         /**
          * Copy constructor.
          *
-         * @param toCopy The descriptor to copy from.
+         * @param DescriptortoCopy The descriptor to copy from.
          */
-        public EditClientDescriptor(EditClientDescriptor toCopy) {
-            setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setTags(toCopy.tags);
+        public EditClientDescriptor(EditClientDescriptor DescriptortoCopy) {
+            setName(DescriptortoCopy.name);
+            setPhone(DescriptortoCopy.phone);
+            setEmail(DescriptortoCopy.email);
+            setTags(DescriptortoCopy.tags);
         }
 
         public boolean isAnyFieldEdited() {

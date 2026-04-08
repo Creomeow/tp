@@ -155,7 +155,12 @@ public class EditPropertyCommand extends Command {
     }
 
     /**
-     * Ensures no duplicate property exists.
+     * Ensures that no duplicate property exists in the address book.
+     *
+     * @param model The model containing the address book data.
+     * @param original The original property before editing.
+     * @param edited The edited property to validate.
+     * @throws CommandException If a duplicate property is found.
      */
     private void ensureNoDuplicateProperty(Model model,
                                            Property original,
@@ -170,9 +175,12 @@ public class EditPropertyCommand extends Command {
     }
 
     /**
-     * Finds the owner of the property.
+     * Finds and returns the owner of the specified property.
      *
-     * @throws CommandException If owner is not found.
+     * @param model The model containing the address book data.
+     * @param property The property whose owner is to be found.
+     * @return The client who owns the specified property.
+     * @throws CommandException If the owner cannot be found.
      */
     private Person findOwner(Model model, Property property) throws CommandException {
         for (Person person : model.getFilteredPersonList()) {
@@ -184,21 +192,30 @@ public class EditPropertyCommand extends Command {
     }
 
     /**
-     * Replaces a property while preserving order.
-     * This method is written by @liuzhiyuan with the help of chatgpt.
+     * Replaces the specified property with a new property while preserving the original order.
+     *
+     * @param owner The owner of the property.
+     * @param originalProperty The original property to be replaced.
+     * @param editedProperty The new property to replace with.
+     * @return A new set of properties with the updated property.
      */
+    //This method is written by @liuzhiyuan with the help of chatgpt.
     private Set<Property> replacePropertyPreserveOrder(Person owner,
-                                                       Property original,
-                                                       Property edited) {
+                                                       Property originalProperty,
+                                                       Property editedProperty) {
         Set<Property> updated = new LinkedHashSet<>();
         for (Property p : owner.getProperties()) {
-            updated.add(p.equals(original) ? edited : p);
+            updated.add(p.equals(originalProperty) ? editedProperty : p);
         }
         return updated;
     }
 
     /**
-     * Creates an edited property.
+     * Creates and returns an edited property based on the given descriptor.
+     *
+     * @param propertyToEdit The original property.
+     * @param descriptor The descriptor containing updated values.
+     * @return The edited property.
      */
     private static Property createEditedProperty(Property propertyToEdit,
                                                  EditPropertyDescriptor descriptor) {
@@ -211,7 +228,8 @@ public class EditPropertyCommand extends Command {
     }
 
     /**
-     * Descriptor for editing property.
+     * Stores the details to edit the property with.
+     * Each non-null field value will replace the corresponding field value of the property.
      */
     public static class EditPropertyDescriptor {
         private PropertyAddress address;
