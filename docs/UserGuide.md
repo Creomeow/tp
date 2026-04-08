@@ -77,7 +77,7 @@ Format: `add n/NAME c/CONTACT e/EMAIL [t/TAG]…`
 Examples:
 
 * `addClient n/John Doe c/98765432 e/johnd@example.com`
-* `addClient n/Betsy Crowe t/friend e/betsycrowe@example.com c/1234567 t/criminal`
+* `addClient n/Betsy Crowe e/betsycrowe@example.com c/1234567 t/vip`
 
 ### Adding a property: `addProperty`
 
@@ -167,7 +167,6 @@ Examples:
 
 * `editClient 1 a/Amy c/91234567 e/johndoe@example.com t/vip`
 * `editClient 2 n/Alex Yeoh`
-* `editClient 1 t/friend t/vip`
 * `editClient 3 t/`
 
 ### Editing a property: `editProperty`
@@ -388,7 +387,7 @@ _Details coming soon ..._
 
 Action              | Format, Examples
 --------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Client**      | `addClient n/NAME c/CONTACT e/EMAIL [t/TAG]…​` <br> e.g., `add n/James Ho c/22224444 e/jamesho@example.com t/friend t/colleague`
+**Add Client**      | `addClient n/NAME c/CONTACT e/EMAIL [t/TAG]…​` <br> e.g., `add n/James Ho c/22224444 e/jamesho@example.com t/vip`
 **Add Property**    | `addProperty i/INDEX a/ADDRESS pr/PRICE s/SIZE [type/TYPE]` <br> e.g., `addProperty i/1 a/311 Clementi Ave 2, #02-25 pr/1200000 s/1200 type/HDB`
 **Clear**           | `clear`
 **Delete Client**   | `deleteClient INDEX`<br> e.g., `deleteClient 3`
