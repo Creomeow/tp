@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.core.index.Index;
@@ -26,7 +27,7 @@ public class RemarkPropertyCommandParser implements Parser<RemarkPropertyCommand
         }
 
         if (argMultimap.getAllValues(PREFIX_REMARK).size() > 1) {
-            throw new ParseException("Only one remark is allowed. Please provide a single r/ prefix.");
+            throw new ParseException(MESSAGE_DUPLICATE_FIELDS);
         }
 
         String remark = argMultimap.getValue(PREFIX_REMARK).orElse("");
