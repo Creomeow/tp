@@ -12,7 +12,7 @@ participant ":FilteredList<Person>" as FilteredPersons MODEL_COLOR
 participant ":FilteredList<Property>" as FilteredProperties MODEL_COLOR
 end box
 
-[-> FilterClientCommand : execute(model)
+[-> FilterClientCommand : execute(...)
 activate FilterClientCommand
 
 FilterClientCommand -> ModelManager : updateFilteredPersonList(predicate)
