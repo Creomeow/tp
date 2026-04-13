@@ -44,14 +44,14 @@ public class FilterPropertyCommandParserTest {
 
     @Test
     public void parse_noPrefix_throwsParseException() {
-            assertParseFailure(parser, "HDB", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            FilterPropertyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "HDB", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FilterPropertyCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_doublePrefixKeyword_throwsParseException() {
-            assertParseFailure(parser, "type/HDB type/Condo", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            FilterPropertyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "type/HDB type/Condo", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FilterPropertyCommand.MESSAGE_USAGE));
     }
 
     @Test
