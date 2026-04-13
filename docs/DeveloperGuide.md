@@ -177,7 +177,7 @@ The `AddPropertyCommand` is executed through the following flow:
 6. `ModelManager` updates the underlying `AddressBook`.
 7. The command returns a `CommandResult`.
 
-For simplicity, the sequence diagram below focuses on the main interactions and omits lower-level validation details, including `Person` object creation, which will also be omitted in the sequence diagrams of all other features.
+For simplicity, the sequence diagram below focuses on the main interactions and omits lower-level validation details, including `Person` object creation, which will also be omitted in the sequence diagrams of all other features as the process is detailed in the `addClient` feature.
 
 The following sequence diagram illustrates the interactions:
 
@@ -638,11 +638,14 @@ Goal: Filter clients by name to quickly find specific clients
 **Extensions:**
 * 2a. No keywords provided
     * 2a1. System shows error message requesting keywords
+      
       Step 2a1 repeats until Actor provides keywords.
+      
       Use case resumes from step 3
 
 * 3a. No clients match the keywords
     * 3a1. System shows message that no clients match the criteria
+      
       Use case ends
 
 <box type="note" seamless>
@@ -652,7 +655,49 @@ Goal: Filter clients by name to quickly find specific clients
 - Filter Property works the same way, with the following differences:
     - In step 1, the actor can filter by property address, price range, or size range instead of client name and tag fields
       </box>
+
+**Use Case 8: Sort Property**
+
+Goal: Sort properties by price or size to quickly find the most suitable property for a client
+
+**MSS:**
+1. Actor enters sort criteria (price or size) with appropriate parameter (up or down)
+2. Actor uses the sortProperty feature with the criteria and parameter
+3. System sorts the property list according to the criteria and parameter
+4. System displays the sorted list of properties
+
+   Use case ends
+
+**Extensions:**
+* 2a. Invalid sort criteria or parameter provided (e.g., criteria other than price or size, parameter other than up or down)
+    * 2a1. System shows error message that the sort criteria or parameter is invalid
+      
+      Step 2a1 repeats until Actor provides valid sort criteria and parameter
+      
+      Use case resumes from step 3
+
+**Use Case 9: Exit Application**
+
+Goal: Exit the application
+
+**MSS:**
+1. Actor uses the exit command
+2. System saves the address book data and user preferences to files
+3. System exits
+   
+   Use case ends
+
+**Use Case 10: Clearing all entries in the address book**
+
+Goal: Clear all entries in the address book to start afresh
+
+**MSS:**
+1. Actor uses the clear command
+2. System clears all entries in the address book
+3. System shows confirmation that the address book has been cleared
   
+    Use case ends
+
 ### Non-Functional Requirements
 
 1. The application should work on any mainstream OS as long as it has Java 17 or above installed.
