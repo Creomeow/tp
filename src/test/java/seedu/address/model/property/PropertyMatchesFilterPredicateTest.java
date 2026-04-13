@@ -58,6 +58,27 @@ public class PropertyMatchesFilterPredicateTest {
     }
 
     @Test
+    public void equals_differentTypeKeywords_returnsFalse() {
+        PropertyMatchesFilterPredicate firstPredicate = new PropertyMatchesFilterPredicate(
+                Collections.singletonList("Clementi"),
+                Collections.singletonList("HDB"),
+                0,
+                Long.MAX_VALUE,
+                0,
+                Long.MAX_VALUE);
+
+        PropertyMatchesFilterPredicate secondPredicate = new PropertyMatchesFilterPredicate(
+                Collections.singletonList("Clementi"),
+                Collections.singletonList("Condo"),
+                0,
+                Long.MAX_VALUE,
+                0,
+                Long.MAX_VALUE);
+
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
     public void test_matchesAddressKeyword_returnsTrue() {
         PropertyMatchesFilterPredicate predicate = new PropertyMatchesFilterPredicate(
                 Collections.singletonList("Clementi"),

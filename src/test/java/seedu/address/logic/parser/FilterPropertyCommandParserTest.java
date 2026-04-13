@@ -26,6 +26,12 @@ public class FilterPropertyCommandParserTest {
     }
 
     @Test
+    public void parse_noCriteria_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FilterPropertyCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_validAddressArgs_returnsFilterPropertyCommand() {
         // no leading and trailing whitespaces
         FilterPropertyCommand expectedFilterPropertyCommand =
@@ -45,6 +51,14 @@ public class FilterPropertyCommandParserTest {
     @Test
     public void parse_doublePrefixType_throwsParseException() {
         assertParseFailure(parser, "type/HDB type/Condo", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FilterPropertyCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_blankType_throwsParseException() {
+        assertParseFailure(parser, " type/   ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FilterPropertyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " type/\t", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 FilterPropertyCommand.MESSAGE_USAGE));
     }
 
