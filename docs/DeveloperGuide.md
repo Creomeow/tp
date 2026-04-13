@@ -452,23 +452,23 @@ Goal: Add a new client's details after first meeting
 
 * 2a. System detects error in Actor’s entry format or missing required fields
 	* 2a1. System requests for new entry with correct format
-	* 2a2. Actor enters data in correct format 
-      
-      Steps 2a1-2a2 repeats until Actor uses the proper format 
+	* 2a2. Actor enters data in correct format
+    
+      Steps 2a1-2a2 repeats until Actor uses the proper format
 
       Use case resumes from step 3
 
 * 2b. System detects duplicate client entry
     * 2b1. System shows an error message that the client already exists in the address book
     * 2b2. Actor enters data with different name
-      
+    
       Steps 2b1-2b2 repeats until Actor uses a different name
-  
+
       Use case resumes from step 3
 
 **Use Case 2: Adding a new property**
 
-Goal: Add a new property's details 
+Goal: Add a new property's details
 
 **MSS:**
 
@@ -493,7 +493,7 @@ Goal: Add a new property's details
     * 2b1. System shows an error message that the property already exists in the address book
 
       Use case ends
-  
+
 * 2c. System detects client already has a 'HDB' type property
     * 2c1. System shows an error message that the client already has a 'HDB' type property
 
@@ -508,7 +508,7 @@ Goal:  See all properties listed under a specific client
 1. Actor identifies client index in the displayed client list
 2. Actor uses the viewClient feature with the client’s index as the parameter
 3. System retrieves client at that index
-4. System retrieves all properties linked to that client 
+4. System retrieves all properties linked to that client
 5. System displays the list of properties linked to client(indexed)
 6. Actor chooses the specific property by index
 7. System displays all relevant information about the specific property
@@ -521,12 +521,12 @@ Goal:  See all properties listed under a specific client
 	* 2a1. System shows error message that client index is invalid
 
       Step 2a1 repeats until Actor uses a valid client index
-       
+    
       Use case resumes from Step 3
 
 * 4a. Client exists but no property listed under client
 	* 4a1. System shows message that no property is listed under client
-    
+
       Use case ends
 
 **Use Case 4:  Delete property listing**
@@ -545,7 +545,7 @@ Goal: Delete a listing after a successful transaction to reduce clutter in the a
 **Extension:**
 * 3a. Property index is invalid (e.g., out of bounds, not a number)
   * 3a1. System shows error message that property index is invalid
-  
+
     Step 3a1 repeats until Actor uses a valid property index
 
     Use case resumes from Step 4
@@ -599,7 +599,7 @@ Goal: Edit a client's details to keep information updated and accurate
     * 2b1. System shows error message that no fields have been provided to edit
 
       Step 2b1 repeats until Actor provides at least one field to edit
-  
+
       Use case ends
 
 * 4a. One or more provided field formats are invalid (e.g. invalid phone number, invalid email)
@@ -638,14 +638,14 @@ Goal: Filter clients by name to quickly find specific clients
 **Extensions:**
 * 2a. No keywords provided
     * 2a1. System shows error message requesting keywords
-      
+    
       Step 2a1 repeats until Actor provides keywords.
-      
+    
       Use case resumes from step 3
 
 * 3a. No clients match the keywords
     * 3a1. System shows message that no clients match the criteria
-      
+    
       Use case ends
 
 <box type="note" seamless>
@@ -671,9 +671,9 @@ Goal: Sort properties by price or size to quickly find the most suitable propert
 **Extensions:**
 * 2a. Invalid sort criteria or parameter provided (e.g., criteria other than price or size, parameter other than up or down)
     * 2a1. System shows error message that the sort criteria or parameter is invalid
-      
+    
       Step 2a1 repeats until Actor provides valid sort criteria and parameter
-      
+    
       Use case resumes from step 3
 
 **Use Case 9: Exit Application**
@@ -684,7 +684,7 @@ Goal: Exit the application
 1. Actor uses the exit command
 2. System saves the address book data and user preferences to files
 3. System exits
-   
+
    Use case ends
 
 **Use Case 10: Clearing all entries in the address book**
@@ -695,7 +695,7 @@ Goal: Clear all entries in the address book to start afresh
 1. Actor uses the clear command
 2. System clears all entries in the address book
 3. System shows confirmation that the address book has been cleared
-  
+
     Use case ends
 
 ### Non-Functional Requirements
