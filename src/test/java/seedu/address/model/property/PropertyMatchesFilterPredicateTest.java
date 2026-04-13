@@ -103,7 +103,7 @@ public class PropertyMatchesFilterPredicateTest {
     }
 
     @Test
-    public void test_addressAndRangeCombined_returnsFalseWhenAnyCriterionFails() {
+    public void test_noAddressKeywordsMatch_returnsFalse() {
         PropertyMatchesFilterPredicate predicate = new PropertyMatchesFilterPredicate(
                 Arrays.asList("Punggol"),
                 Collections.emptyList(),
@@ -124,5 +124,17 @@ public class PropertyMatchesFilterPredicateTest {
                 0,
                 Long.MAX_VALUE);
         assertTrue(predicate.test(PROPERTY));
+    }
+
+    @Test
+    public void test_noTypeKeywordsMatch_returnsFalse() {
+        PropertyMatchesFilterPredicate predicate = new PropertyMatchesFilterPredicate(
+                Collections.emptyList(),
+                Collections.singletonList("Condo"),
+                0,
+                Long.MAX_VALUE,
+                0,
+                Long.MAX_VALUE);
+        assertFalse(predicate.test(PROPERTY));
     }
 }

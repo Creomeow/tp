@@ -43,19 +43,13 @@ public class FilterPropertyCommandParserTest {
     }
 
     @Test
-    public void parse_noPrefix_throwsParseException() {
-        assertParseFailure(parser, "HDB", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                FilterPropertyCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_doublePrefixKeyword_throwsParseException() {
+    public void parse_doublePrefixType_throwsParseException() {
         assertParseFailure(parser, "type/HDB type/Condo", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 FilterPropertyCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_validSingleKeyword_returnsFilterPropertyCommand() {
+    public void parse_validSingleType_returnsFilterPropertyCommand() {
         // Single keyword HDB
         FilterPropertyCommand expectedFilterPropertyCommand = new FilterPropertyCommand(
                 new PropertyMatchesFilterPredicate(
@@ -75,7 +69,7 @@ public class FilterPropertyCommandParserTest {
     }
 
     @Test
-    public void parse_caseInsensitiveKeywords_returnsFilterPropertyCommand() {
+    public void parse_caseInsensitiveType_returnsFilterPropertyCommand() {
         FilterPropertyCommand expectedFilterPropertyCommand = new FilterPropertyCommand(
                 new PropertyMatchesFilterPredicate(Collections.emptyList(), Arrays.asList("hdb"),
                         0, Long.MAX_VALUE, 0, Long.MAX_VALUE));
@@ -88,8 +82,8 @@ public class FilterPropertyCommandParserTest {
     }
 
     @Test
-    public void parse_multipleKeywords_throwsParseException() {
-        assertParseFailure(parser, " type/HDB Condo",
+    public void parse_multipleTypes_throwsParseException() {
+                assertParseFailure(parser, " type/HDB Condo",
                 String.format(MESSAGE_INVALID_TYPE, FilterPropertyCommand.MESSAGE_USAGE));
     }
 

@@ -38,13 +38,13 @@ public class FilterPropertyCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-        addPropertyToModel(model, INDEX_FIRST_PERSON, "311 Clementi Ave 2", "1200000", "1200");
-        addPropertyToModel(model, INDEX_FIRST_PERSON, "50 Jurong East St 24", "850000", "1000");
-        addPropertyToModel(model, INDEX_SECOND_PERSON, "10 Punggol Walk", "950000", "1100");
+        addPropertyToModel(model, INDEX_FIRST_PERSON, "311 Clementi Ave 2", "1200000", "1200", "HDB");
+        addPropertyToModel(model, INDEX_FIRST_PERSON, "50 Jurong East St 24", "850000", "1000", "Condo");
+        addPropertyToModel(model, INDEX_SECOND_PERSON, "10 Punggol Walk", "950000", "1100", "HDB");
 
-        addPropertyToModel(expectedModel, INDEX_FIRST_PERSON, "311 Clementi Ave 2", "1200000", "1200");
-        addPropertyToModel(expectedModel, INDEX_FIRST_PERSON, "50 Jurong East St 24", "850000", "1000");
-        addPropertyToModel(expectedModel, INDEX_SECOND_PERSON, "10 Punggol Walk", "950000", "1100");
+        addPropertyToModel(expectedModel, INDEX_FIRST_PERSON, "311 Clementi Ave 2", "1200000", "1200", "HDB");
+        addPropertyToModel(expectedModel, INDEX_FIRST_PERSON, "50 Jurong East St 24", "850000", "1000", "Condo");
+        addPropertyToModel(expectedModel, INDEX_SECOND_PERSON, "10 Punggol Walk", "950000", "1100", "HDB");
     }
 
     @Test
@@ -135,7 +135,7 @@ public class FilterPropertyCommandTest {
 
     @Test
     public void execute_typeKeyword_propertiesAndOwnersFound() {
-        String expectedMessage = String.format(MESSAGE_PROPERTIES_LISTED, 3);
+        String expectedMessage = String.format(MESSAGE_PROPERTIES_LISTED, 1);
         PropertyMatchesFilterPredicate predicate =
                 new PropertyMatchesFilterPredicate(Collections.emptyList(), Collections.singletonList("Condo"),
                         0, Long.MAX_VALUE, 0, Long.MAX_VALUE);
@@ -145,8 +145,8 @@ public class FilterPropertyCommandTest {
                 .anyMatch(property -> person.getProperties().contains(property)));
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(3, model.getFilteredPropertyList().size());
-        assertEquals(2, model.getFilteredPersonList().size());
+        assertEquals(1, model.getFilteredPropertyList().size());
+        assertEquals(1, model.getFilteredPersonList().size());
     }
 
     /**
@@ -157,10 +157,10 @@ public class FilterPropertyCommandTest {
                 Collections.emptyList(), 0, Long.MAX_VALUE, 0, Long.MAX_VALUE);
     }
 
-    private void addPropertyToModel(Model model, Index index, String address, String price, String size)
+    private void addPropertyToModel(Model model, Index index, String address, String price, String size, String type)
             throws Exception {
         Property property = new Property(new PropertyAddress(address), new Price(price), new Size(size),
-                new PropertyType("Condo"));
+                new PropertyType(type));
         new AddPropertyCommand(index, property).execute(model);
     }
 }
