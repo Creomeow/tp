@@ -117,7 +117,7 @@ Format: `addProperty i/INDEX a/ADDRESS pr/PRICE s/SIZE type/TYPE`
 
 - Each property can only have one owner. A property cannot be assigned to multiple clients.
 - Two properties with the same `ADDRESS` are considered duplicate properties.
-- A client cannot legally own more than 1 HDB as it is not possible
+- A client cannot legally own more than 1 HDB as it is not possible.
 
 </box>
 
