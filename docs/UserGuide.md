@@ -57,6 +57,7 @@ ClientVault is a **desktop app for managing clients and properties, optimized fo
 ### Viewing help : `help`
 
 ![help](images/help.png)
+
 Shows a message explaining how to access the help page.
 
 Format: `help`
@@ -238,7 +239,7 @@ Examples:
 ### Adding remarks to a property : `remarkProperty`
 
 ![remarkProperty](images/remarkProperty.png)
-Adds a remark to the property at the specified INDEX.
+Adds a remark to the property at the specified index.
 Existing remarks will be overwritten by the new remark.
 
 Format: `remarkProperty PROPERTY_INDEX r/REMARK`
