@@ -34,6 +34,7 @@ public class PriceTest {
         assertTrue(Price.isValidPrice("0"));
         assertTrue(Price.isValidPrice("12345"));
         assertTrue(Price.isValidPrice("1234567890"));
+        assertTrue(Price.isValidPrice("2147483648"));
     }
 
     @Test
